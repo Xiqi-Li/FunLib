@@ -15,6 +15,7 @@ Thumbs.db
 # Coverage and reports
 coverage/
 *.html
+*.tar.gz
 
 # Editor files
 .vscode/

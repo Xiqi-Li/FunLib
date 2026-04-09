@@ -1183,51 +1183,8 @@ robustscale <- function(data, dim=1, center=TRUE, scale=TRUE, scale_max=Inf,
   return(list(data=data,medians=medians,mads=mads))
 }
 
-uniCoxPh=function(time,status,covariateMx){
-  covariate_names=setNames(rownames(covariateMx),paste("feature",1:nrow(covariateMx),sep = ""))
-  rownames(covariateMx)=names(covariate_names)
-  temp2=cbind(time=resdf[,resV],status=status,t(covariateMx)) %>% as.data.frame
-
-  univ_formulas <- sapply(names(covariate_names),
-                          function(x) as.formula(paste('Surv(time, status)~', x)))
-  univ_models <- lapply( univ_formulas, function(x){coxph(x, data = temp2)})
-  univ_results <- lapply(univ_models,
-                         function(x){
-                           x <- summary(x)
-                           n=x$n
-                           n.event=x$nevent
-                           # p.value<-signif(x$wald["pvalue"], digits=2)
-                           p.value.logLik=x$logtest["pvalue"]
-                           p.value.sc=x$sctest["pvalue"]
-                           p.value.wald<-x$waldtest["pvalue"]
-                           # wald.test<-signif(x$wald["test"], digits=2)
-                           # wald.test<-x$wald["test"]
-                           # beta<-signif(x$coef[1], digits=2);# coeficient beta
-                           beta<-x$coef[1]
-                           HR <-signif(x$coef[2], digits=2); # exp(beta)
-                           HR.confint.lower <- signif(x$conf.int[,"lower .95"], 2)
-                           HR.confint.upper <- signif(x$conf.int[,"upper .95"],2)
-                           HR <- paste0(HR, " (",
-                                        HR.confint.lower, "-", HR.confint.upper, ")")
-                           res<-c(beta, HR, p.value.logLik,p.value.sc,p.value.wald,n,n.event)
-                           names(res)<-c("beta", "HR (95% CI for HR)","p.value.logLik","p.value.logRank","p.value.Wald","n","n.event")
-                           return(res)
-                           #return(exp(cbind(coef(x),confint(x))))
-                         })
-  res <- t(as.data.frame(univ_results, check.names = FALSE)) %>%as.data.frame()
-  res[,c("beta","p.value.logLik","p.value.logRank","p.value.Wald","n","n.event")]=apply(res[,c("beta","p.value.logLik","p.value.logRank","p.value.Wald","n","n.event")], 2, as.numeric)
-  rownames(res)=covariate_names
-  return(res)
-}
-
-multiCoxPh=function(time,status,covariateMx){
-  covariate_names=setNames(rownames(covariateMx),paste("feature",1:nrow(covariateMx),sep = ""))
-  rownames(covariateMx)=names(covariate_names)
-  temp2=cbind(time=resdf[,resV],status=status,t(covariateMx)) %>% as.data.frame
-  temp2%>%analyse_multivariate(
-    vars(time,status),
-    covariates = eval(parse(text = sprintf("vars(%s)",paste(rownames(covariateMx),collapse=",")))))
-}
+# Shared helpers `uniCoxPh` and `multiCoxPh`
+# are defined canonically in 06_survival_analysis.R.
 
 getSigPair=function(corResult.sigs){
   sigPairs=data.frame()

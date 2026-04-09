@@ -50,12 +50,6 @@ getmode <- function(v) {
 }
 
 # SOURCE: functions.R (2026-03-02)
-chisq_dist<-function(df){
-  statistics<-apply(df,2,function(col_1){apply(df,2,function(col_2){p<-stats::chisq.test(col_1,col_2,correct = T);return(p$statistic)})})
-  return(stats::as.dist(statistics))
-}
-
-# SOURCE: functions.R (2026-03-02)
 removeoutlier<-function(data){
   quartiles<-stats::quantile(data,probs=c(0.25,0.75),na.rm=T)
   IQR<-stats::IQR(data)
@@ -97,59 +91,8 @@ discrete_quantile<-function(counts,sample_info,class_factors,batch_factors){
   return(results)
 }
 
-# SOURCE: functions.R (2026-03-02)
-align_df<-function(aligned_df,aligned_name,keep_names=NULL,refered_df,refered_name){
-  if(refered_name=="rownames"){
-    refered_=rownames(refered_df)
-  } else  if(refered_name=="colnames"){
-    refered_=colnames(refered_df)
-  } else{
-    refered_=refered_df[[refered_name]]
-  }
-  stopifnot(length(refered_)==length(unique(refered_)))
-  if(aligned_name=='rownames'){
-    if(is.numeric(keep_names)){
-      keep_df<-aligned_df[keep_names,,drop=F]
-      aligned_df<-aligned_df[-keep_names,,drop=F]
-    } else if(is.character(keep_names)){
-      keep_df<-aligned_df[rownames(aligned_df) %in% keep_names,,drop=F]
-      aligned_df<-aligned_df[!rownames(aligned_df) %in% keep_names,,drop=F]
-    } else {
-      keep_df<-NULL
-    }
-    aligned_<-rbind(aligned_df[refered_,,drop=F],keep_df)
-  } else if(aligned_name=="colnames"){
-    if(is.numeric(keep_names)){
-      keep_df<-aligned_df[,keep_names,drop=F]
-      aligned_df<-aligned_df[,-keep_names,drop=F]
-    } else if(is.character(keep_names)){
-      keep_df<-aligned_df[,colnames(aligned_df) %in% keep_names,drop=F]
-      aligned_df<-aligned_df[,!colnames(aligned_df) %in% keep_names,drop=F]
-    } else {
-      keep_df<-NULL
-    }
-    aligned_<-cbind(aligned_df[,refered_],keep_df)
-  } else {
-    if(is.numeric(keep_names)){
-      keep_df<-aligned_df[,keep_names,drop=F]
-      aligned_df<-aligned_df[,-keep_names,drop=F]
-    } else if(is.character(keep_names)){
-      keep_df<-aligned_df[,aligned_df[[aligned_name]] %in% keep_names,drop=F]
-      aligned_df<-aligned_df[,!aligned_df[[aligned_name]] %in% keep_names,drop=F]
-    } else {
-      keep_df<-NULL
-    }
-    aligned_<-rbind(aligned_df[match(refered_,aligned_df[[aligned_name]]),,drop=F],keep_df)
-  }
-  return(aligned_)
-}
-
-# SOURCE: functions.R (2026-03-02)
-column2namedVector<-function(df,column){
-  vec<-df[[column]]
-  names(vec)<-rownames(df)
-  return(vec)
-}
+# Shared helpers `chisq_dist`, `align_df`, and `column2namedVector`
+# are defined canonically in 01_genomic_data.R.
 
 # SOURCE: functions.R (2026-03-02)
 filter_assay_info<-function(assay_info,sample_info){

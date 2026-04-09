@@ -300,45 +300,4 @@ goEnrich<-function(genelist,ont="BP",enrichGO_params=NULL,rendergodagplot=T,dagp
   return(list(go=go,termsimilarities=termsimilarities,gocluster=df,enrichmap_graph=graph))
 }
 
-
-# SOURCE: myscripts.R (2023-06-29)
-geneset_activity<-function(expressions,scale=c("row","column","none"),genesets,methods=c("ssgsea","gsva","zscore"),aggregate=T){
-  scale=match.arg(scale)
-  if(scale=="row"){
-    expressions<-t(scale(t(expressions)))
-  }
-  if(scale=="column"){
-    expressions=t(scale(expressions))
-  }
-  ssgsea_activity=NULL
-  gsva_activity=NULL
-  zscore_activity=NULL
-  agg_activity=NULL
-  if("ssgsea" %in% methods){
-    ssgsea_activity=corto::ssgsea(expressions,genesets)
-    colnames(ssgsea_activity)<-colnames(expressions)
-  }
-  if("gsva" %in% methods){
-    gsva_activity=GSVA::gsva(expressions,genesets)
-    colnames(gsva_activity)<-colnames(expressions)
-  }
-  if("zscore" %in% methods){
-    zscore_activity<-expressions[FALSE,]
-    for(gs in names(genesets)){
-      gs_activity<-colMeans(expressions[intersect(rownames(expressions),genesets[[gs]]),],na.rm=T)
-      zscore_activity<-rbind(zscore_activity,gs_activity)
-    }
-    rownames(zscore_activity)<-names(genesets)
-    colnames(zscore_activity)<-colnames(expressions)
-  }
-  if(aggregate){
-    agg_activity=data.frame(matrix(0,nrow=length(genesets),ncol = ncol(expressions)))
-    rownames(agg_activity)<-names(genesets)
-    colnames(agg_activity)<-colnames(expressions)
-    for(method in methods){
-      agg_activity<-agg_activity+list(ssgsea_activity=ssgsea_activity,gsva_activity=gsva_activity,zscore_activity=zscore_activity)[[paste(method,"activity",sep="_")]]
-    }
-    agg_activity<-agg_activity/length(methods)
-  }
-  return(list(ssgsea_activity=ssgsea_activity,gsva_activity=gsva_activity,zscore_activity=zscore_activity,agg_activity=agg_activity))
-}
+# Shared helper `geneset_activity` is defined canonically in 03_expression_analysis.R.

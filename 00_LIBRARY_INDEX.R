@@ -7,9 +7,9 @@
 # ~330 R/Rmd files found across the WoodmanLab project tree.
 #
 # HOW TO USE:
-#   source("WoodmanLab_FunctionLibrary/01_genomic_data.R")
-#   source("WoodmanLab_FunctionLibrary/02_mutation_analysis.R")
-#   # ... etc.
+#   library(FunLib)
+#   # Functions are loaded from the package namespace.
+#   # Raw module files live under the package R/ directory.
 #
 # =============================================================================
 # FILE INVENTORY
@@ -275,7 +275,7 @@
 #
 # GSEA & PATHWAY (05):
 #   gsea, pathway_gene_table, fgseatableplot, sankey_heatmap,
-#   read_pathways, goEnrich, geneset_activity
+#   read_pathways, goEnrich
 #
 # SURVIVAL (06):
 #   plotKM, getKM_medium, uniCoxPh, multiCoxPh
@@ -290,7 +290,7 @@
 #   count_within, getCountWithin, performTtestsAllRows,
 #   performPairedTtestsAllRows, performTtestsAllClassesOneVsRest,
 #   performTtestsAllClassesEachPair, getAssociation, getCor, robustscale,
-#   uniCoxPh, multiCoxPh, getSigPair, bi_ripleys_k_mod, getMeanCountWithin,
+#   getSigPair, bi_ripleys_k_mod, getMeanCountWithin,
 #   PieDonut, plotPieDonutBySlides, plot_immunoflo, trimMif4plots,
 #   plotImmuneHighlights
 #
@@ -302,8 +302,8 @@
 #   oncokb_annotate_fusion, expand_oncokb_res_tibbles
 #
 # STATISTICS & UTILITIES (10):
-#   is.empty.data.frame, getmode, chisq_dist, removeoutlier,
-#   set_column_as_rownames, discrete_quantile, align_df, column2namedVector,
+#   is.empty.data.frame, getmode, removeoutlier,
+#   set_column_as_rownames, discrete_quantile,
 #   filter_assay_info, format_infotable, extract_paired_sample_info,
 #   read_info, read_foundry_datasets,
 #   uni_cox, cal_riskscore, survivalSignatures, predictGroup,
