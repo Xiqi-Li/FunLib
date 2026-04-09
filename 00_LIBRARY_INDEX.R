@@ -305,7 +305,7 @@
 #   is.empty.data.frame, getmode, removeoutlier,
 #   set_column_as_rownames, discrete_quantile,
 #   filter_assay_info, format_infotable, extract_paired_sample_info,
-#   read_info, read_foundry_datasets,
+#   read_info, read_foundry_datasets, write_foundry_datasets,
 #   uni_cox, cal_riskscore, survivalSignatures, predictGroup,
 #   compare_two_groups, safe_compare_two_groups, add_p_adjust,
 #   title_case_smart, compareFeatures

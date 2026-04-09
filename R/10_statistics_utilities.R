@@ -18,6 +18,7 @@
 #   extract_paired_sample_info - Extract longitudinally paired samples
 #   read_info                 - Read + format info table (caches formatted version)
 #   read_foundry_datasets     - Read datasets from MD Anderson Foundry API
+#   write_foundry_datasets    - Write a dataset to MD Anderson Foundry API
 #
 # CONTENTS — Statistical functions:
 #   uni_cox                   - Univariate Cox regression (p-value or HR)
@@ -295,6 +296,13 @@ read_foundry_datasets<-function(foundry.hostname="foundry.mdanderson.edu",foundr
   })
   names(datasets)<-names(aliases)
   return(datasets)
+}
+
+# SOURCE: foundry utility addition (2026-04-09)
+write_foundry_datasets<-function(df,foundry.hostname="foundry.mdanderson.edu",foundry.token,alias){
+  stopifnot("token missing!"=!missing(foundry.token))
+  options(foundry.hostname = foundry.hostname,foundry.token = foundry.token)
+  foundry::datasets.write_table(df,alias)
 }
 
 # --- SECTION 2: SURVIVAL STATISTICS ------------------------------------------
