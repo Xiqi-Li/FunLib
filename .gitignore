@@ -1,0 +1,28 @@
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.DS_Store
+Thumbs.db
+
+# R package / session artifacts
+*.Rcheck/
+*.Rout
+*.Rout.fail
+*.Rout.save
+*.Rout.html
+
+# Coverage and reports
+coverage/
+*.html
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local environment files
+.Renviron
+.env
+.env.*
