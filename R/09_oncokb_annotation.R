@@ -33,11 +33,14 @@
 # --- INTERNAL HELPERS --------------------------------------------------------
 
 #' Null-coalescing helper
+#' @noRd
 #' @keywords internal
+#' @details Source provenance: oncokb.R (2026-01-24).
 # SOURCE: oncokb.R (2026-01-24)
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
 #' Retrieve OncoKB API token from argument or ONCOKB_API_TOKEN env var
+#' @noRd
 #' @keywords internal
 # SOURCE: oncokb.R (2026-01-24)
 .oncokb_get_token <- function(token = NULL) {
@@ -51,6 +54,7 @@
 }
 
 #' Perform an authenticated HTTP request to OncoKB API
+#' @noRd
 #' @keywords internal
 # SOURCE: oncokb.R (2026-01-24)
 .oncokb_request <- function(url, query = list(), token) {
@@ -70,6 +74,7 @@
 #'
 #' @param token OncoKB API token. If NULL, reads from ONCOKB_API_TOKEN env var.
 #' @return Character scalar version string (e.g. "v4.14")
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 get_oncokb_version <- function(token = NULL) {
@@ -88,6 +93,7 @@ get_oncokb_version <- function(token = NULL) {
 #' @param oncokb_response Parsed JSON response from OncoKB
 #' @param Implication Field name: "diagnosticImplications" or "prognosticImplications"
 #' @return One-row tibble with tumorType, alterations, level, pmids
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 extract_diagnostic_implications <- function(oncokb_response, Implication = "diagnosticImplications") {
@@ -119,6 +125,7 @@ extract_diagnostic_implications <- function(oncokb_response, Implication = "diag
 #'
 #' @param oncokb_response Parsed JSON response from OncoKB
 #' @return List with elements \code{onerow} (collapsed tibble) and \code{detailed} (per-alteration tibble)
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 extract_treatments <- function(oncokb_response) {
@@ -184,6 +191,7 @@ extract_treatments <- function(oncokb_response) {
 #' @param referenceGenome "GRCh37" or "GRCh38"
 #' @param oncokb_version OncoKB data version string
 #' @return Tibble with oncogenic classification, treatment, diagnostic, and prognostic fields
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 query_oncokb_bypos <- function(
@@ -255,6 +263,7 @@ query_oncokb_bypos <- function(
 #' @param referenceGenome Genome build
 #' @param oncokb_version OncoKB version string
 #' @return Tibble with oncogenicity, treatment, diagnostic/prognostic fields
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 query_oncokb_CN <- function(
@@ -301,6 +310,7 @@ query_oncokb_CN <- function(
 #' @param cancer_types Optional cancer type vector (or NULL to use maf$cancer_type)
 #' @param parallelize Logical, use furrr::future_pmap_dfr (default TRUE)
 #' @return Input MAF with OncoKB annotation columns appended
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 oncokb_annotate_maf <- function(maf, cancer_types = NULL, parallelize = TRUE) {
@@ -339,6 +349,7 @@ oncokb_annotate_maf <- function(maf, cancer_types = NULL, parallelize = TRUE) {
 #' @param cancer_types Optional cancer type vector (or NULL to use maf$cancer_type)
 #' @param parallelize Logical, use furrr (default FALSE — safer for large MAFs)
 #' @return Input MAF with OncoKB annotation columns appended
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 oncokb_annotate_maf_bypos <- function(maf, cancer_types = NULL, parallelize = F) {
@@ -389,6 +400,7 @@ oncokb_annotate_maf_bypos <- function(maf, cancer_types = NULL, parallelize = F)
 #' @param referenceGenome Genome build
 #' @param oncokb_version OncoKB version string
 #' @return Tibble with oncogenicity, treatment, and implication fields
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 query_oncokb_fusion <- function(
@@ -442,6 +454,7 @@ query_oncokb_fusion <- function(
 #' @param referenceGenome Genome build
 #' @param oncokb_version OncoKB version string
 #' @return fusion_df with OncoKB annotation columns appended
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 oncokb_annotate_fusion <- function(
@@ -491,6 +504,7 @@ oncokb_annotate_fusion <- function(
 #'
 #' @param tmp Tibble from query_oncokb_bypos / query_oncokb_CN / query_oncokb_fusion
 #' @return Flat data.frame with expanded columns
+#' @details Source provenance: oncokb.R (2026-01-24).
 #' @export
 # SOURCE: oncokb.R (2026-01-24)
 expand_oncokb_res_tibbles=function(tmp){

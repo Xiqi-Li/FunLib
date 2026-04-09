@@ -27,6 +27,21 @@
 #       The mRNA.R version (2026-03-02) returns only sample_pct_low_expression vector
 #       and adds na.rm=T to the sum() call. The Pembro version is used here as it is
 #       more informative.
+# SOURCE: funcsInPembro.R (2025-07-02)
+#' Check low expression.
+#'
+#' Check low expression.
+#' @param expressions Function argument documented from the legacy interface.
+#' @param low_expression_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param low_expression_pct_outlier_factor Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: funcsInPembro.R (2025-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' check_low_expression(expressions = ..., low_expression_cutoff = ...)
+#' }
+#' @export
 check_low_expression<-function(expressions,low_expression_cutoff=1,low_expression_pct_outlier_factor=1.5){
   tatal_low_expression<-sum(expressions<low_expression_cutoff)
   average_pct_low_expression<-tatal_low_expression/(nrow(expressions)*ncol(expressions))*100
@@ -68,9 +83,11 @@ check_low_expression<-function(expressions,low_expression_cutoff=1,low_expressio
 #' @param remove_outlier, logic, default FALSE, whether remove outlier value before calculation of variance, and etc
 
 #' @return data.frame. data for unsupervised analysis.
+#' @details Source provenance: mRNA.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: mRNA.R (2026-03-02)
 prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL","ATC","GUMBELATC"),mad_top_n=-1,mad_top_quantile=0.75,cv_top_n=-1,cv_top_mean_quantile=0.5,dq_top_mean_quantile=0.5,dq_top_var_quantile=0.5,gumbel_p_cutoff=0.1,atc_top_n=-1,atc_cutoff=0.2,remove_outlier=F){
   method=match.arg(method)
   #MAD
@@ -93,7 +110,7 @@ prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL
   #CV
   if(method=="CV"){
     means=apply(expressions,1,function(dat) {if(remove_outlier) dat=removeoutlier(dat);mean=mean(dat,na.rm=T);return(mean)})
-    #'      rowMeans(expressions,na.rm=T)
+    #      rowMeans(expressions,na.rm=T)
     top_mean_filter=stats::quantile(means,cv_top_mean_quantile,na.rm=T)
     expressions_=expressions[means>=top_mean_filter,]
     expressions_<-expressions_[rowSums(is.na(as.matrix(expressions_)))<(0.25*ncol(expressions_)),]
@@ -146,6 +163,7 @@ prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL
 # NOTE: This version adds robust_lm and weight parameters, and uses arrayWeights().
 #       The mRNA.R version (2026-03-02) lacks these parameters; use this version for
 #       compatibility with run_dge_gsea_pipeline().
+#' Differential expression analysis using limma.
 #'
 #' @description differential gene expression analysis using limma algorithm.
 #'
@@ -171,6 +189,7 @@ prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL
 #'
 #' @import DESeq2 statmod
 #' @return \code{list()}, contains expressions, method, design, contrasts, test, and statistics of limma test.
+#' @details Source provenance: funcsInPembro.R (2025-07-02).
 #' @export
 #'
 #' @examples
@@ -187,6 +206,7 @@ prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL
 #' }
 #'
 #'
+# SOURCE: funcsInPembro.R (2025-07-02)
 dge_limma<-function(expressions,is_rawcount=FALSE,is_logged=T,normalize=FALSE,sample_frequency_threshold=0.5,
                     clinic_info,
                     ID_col,
@@ -319,9 +339,11 @@ dge_limma<-function(expressions,is_rawcount=FALSE,is_logged=T,normalize=FALSE,sa
 
 #'
 #' @return list. ontains expressions,methond, design,contrasts,test, and statistics of edgeR test
+#' @details Source provenance: mRNA.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: mRNA.R (2026-03-02)
 dge_edgeR<-function(expressions,sample_frequency_threshold=0.5,clinic_info,ID_col,group_col,covariate_col,block_col,contrasts){
   stopifnot("expression colnames wass not match ID column of clinic_info"=all(colnames(expressions)==clinic_info[[ID_col]]))
   if(!missing(block_col)){
@@ -417,9 +439,11 @@ dge_edgeR<-function(expressions,sample_frequency_threshold=0.5,clinic_info,ID_co
 
 #'
 #' @return list. contains expressions,methond, design,contrasts,test, and statistics of DESeq2 test
+#' @details Source provenance: mRNA.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: mRNA.R (2026-03-02)
 dge_DESeq<-function(expressions,sample_frequency_threshold=0.5,clinic_info,ID_col,group_col,covariate_col,block_col,contrasts){
   stopifnot("expression colnames wass not match ID column of clinic_info"=all(colnames(expressions)==clinic_info[[ID_col]]))
   if(!missing(block_col)){
@@ -507,6 +531,32 @@ dge_DESeq<-function(expressions,sample_frequency_threshold=0.5,clinic_info,ID_co
 
 
 # SOURCE: funcsInPembro.R (2025-07-02)
+#' Run dge gsea pipeline.
+#'
+#' Run dge gsea pipeline.
+#' @param sample_info Input data frame or matrix.
+#' @param log2_expressions Function argument documented from the legacy interface.
+#' @param phenotype Function argument documented from the legacy interface.
+#' @param contrast Function argument documented from the legacy interface.
+#' @param pathways Function argument documented from the legacy interface.
+#' @param logFC_thresh Function argument documented from the legacy interface.
+#' @param show_boxplots Function argument documented from the legacy interface.
+#' @param show_volcano Function argument documented from the legacy interface.
+#' @param show_heatmap Function argument documented from the legacy interface.
+#' @param run_gsea Logical flag controlling optional behavior.
+#' @param make_datatables Function argument documented from the legacy interface.
+#' @param gsea_rank_metric Function argument documented from the legacy interface.
+#' @param gsea_rank_p_thresh Function argument documented from the legacy interface.
+#' @param robust_lm Function argument documented from the legacy interface.
+#' @param weight Function argument documented from the legacy interface.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: funcsInPembro.R (2025-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' run_dge_gsea_pipeline(...)
+#' }
+#' @export
 run_dge_gsea_pipeline <- function(
     sample_info,
     log2_expressions,
@@ -779,6 +829,7 @@ run_dge_gsea_pipeline <- function(
 #' @param stepscale Numeric scale factor for adjusting the vertical spacing of GSEA annotations. Default is \code{1}.
 #'
 #' @return A \code{ggplot} object showing the volcano plot with pathway and GSEA annotations.
+#' @details Source provenance: funcsInPembro.R (2025-07-02).
 #'
 #' @examples
 #' plot_volcano_with_annotations(
@@ -795,6 +846,7 @@ run_dge_gsea_pipeline <- function(
 #' @export
 
 
+# SOURCE: funcsInPembro.R (2025-07-02)
 plot_volcano_with_annotations <- function(
     dge_table,
     logFC_col ="Yes-No:logFC",
@@ -966,9 +1018,11 @@ plot_volcano_with_annotations <- function(
 #' @param cols character. colors for labels.
 #'
 #' @return list. contain results for each method.
+#' @details Source provenance: mRNA.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: mRNA.R (2026-03-02)
 unsupervised_analysis<-function(dat,labels=NULL,scaled=c("row","column","none"),run_umap=T,umap_params=NULL,umap_config=umap::umap.defaults,run_tsne=T,tsne_params=NULL,run_pca=T,pca_params=NULL,run_mds=T,mds_params=NULL,run_heatmap=T,heatmap_params=NULL,cols){
   scaled=match.arg(scaled)
   if(scaled=='row'){
@@ -1052,6 +1106,29 @@ unsupervised_analysis<-function(dat,labels=NULL,scaled=c("row","column","none"),
 
 
 # SOURCE: mRNA.R (2026-03-02)
+#' Consensus immunedeconvolute.
+#'
+#' Consensus immunedeconvolute.
+#' @param expressions Function argument documented from the legacy interface.
+#' @param methods Function argument documented from the legacy interface.
+#' @param celltype_mapping Function argument documented from the legacy interface.
+#' @param bindea_reference Function argument documented from the legacy interface.
+#' @param cibersort_reference Function argument documented from the legacy interface.
+#' @param consensustme_indication Function argument documented from the legacy interface.
+#' @param danaher_reference Function argument documented from the legacy interface.
+#' @param davoli_reference Function argument documented from the legacy interface.
+#' @param deconseq_reference Function argument documented from the legacy interface.
+#' @param timer_indication Function argument documented from the legacy interface.
+#' @param method_frequency_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param background_noise Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: mRNA.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' consensus_immunedeconvolute(expressions = ..., methods = ...)
+#' }
+#' @export
 consensus_immunedeconvolute<-function(expressions,methods=c("abis","bindea","cibersort","consensustme","danaher","davoli","dcq","deconseq","epic","ImmuCellAI","mcpcounter","quantiseq","timer","xcell"),celltype_mapping,bindea_reference,cibersort_reference,consensustme_indication,danaher_reference,davoli_reference,deconseq_reference,timer_indication,method_frequency_cutoff=2,background_noise=0.00001){
   results<-list()
   immune_abis<-NULL
@@ -1237,6 +1314,22 @@ consensus_immunedeconvolute<-function(expressions,methods=c("abis","bindea","cib
 
 
 # SOURCE: mRNA.R (2026-03-02)
+#' Geneset activity.
+#'
+#' Geneset activity.
+#' @param expressions Function argument documented from the legacy interface.
+#' @param scale Option controlling how the function runs.
+#' @param genesets Function argument documented from the legacy interface.
+#' @param methods Function argument documented from the legacy interface.
+#' @param aggregate Logical flag controlling optional behavior.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: mRNA.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' geneset_activity(expressions = ..., scale = ...)
+#' }
+#' @export
 geneset_activity<-function(expressions,scale=c("row","column","none"),genesets,methods=c("ssgsea","gsva","zscore"),aggregate=T){
   scale=match.arg(scale)
   if(scale=="row"){

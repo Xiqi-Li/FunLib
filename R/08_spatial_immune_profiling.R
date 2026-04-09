@@ -27,13 +27,18 @@
 
 #' define Cell
 #'
-#' @param x
-#' @param Cpheno
+#' @param x Function argument documented from the legacy interface.
+#' @param Cpheno Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' defineCell(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 defineCell=function(x,Cpheno){
   apply(x[,Cpheno],1,function(x) paste(na.omit(Cpheno[x]),collapse = ""))
 }
@@ -77,13 +82,18 @@ Panels.EssentialCellDefs=list(
 
 #' reassign NA in a vector
 #'
-#' @param x
-#' @param y
+#' @param x Function argument documented from the legacy interface.
+#' @param y Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' reassignNA(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 reassignNA=function(x,y){
   x[is.na(x)]=y
   return(x)}
@@ -98,16 +108,21 @@ reassignNA=function(x,y){
 #' @param dfs a data frame object that contains slide ID, ROI ID and cell ID column
 #' @param ROIIDs a vector of ROI IDs
 #' @param cellDefs a vector of cell definition -- positive markers sorted and combined.
-#' @param TissueCategoryAreas
-#' @param mutually_exclusive
-#' @param byROI
-#' @param bySlide
-#' @param selectedROIs
+#' @param TissueCategoryAreas Function argument documented from the legacy interface.
+#' @param mutually_exclusive Function argument documented from the legacy interface.
+#' @param byROI Function argument documented from the legacy interface.
+#' @param bySlide Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' getCtsPcDens(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 getCtsPcDens=function(dfs,ROIIDs,cellDefs,TissueCategoryAreas,mutually_exclusive=T,byROI=T,bySlide=T,selectedROIs){
   tissCat=rownames(TissueCategoryAreas)
   results=list()
@@ -226,6 +241,8 @@ getCtsPcDens=function(dfs,ROIIDs,cellDefs,TissueCategoryAreas,mutually_exclusive
 #' @seealso [find_nearest_distance] which performs the distance calculation.
 #' @family distance functions
 #' @md
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 compute_all_nearest_distance <- function(cell_table_path=NULL, out_path=NULL) {
   # Get the path to the cell seg table and check it
   if (is.null(cell_table_path))
@@ -259,12 +276,15 @@ compute_all_nearest_distance <- function(cell_table_path=NULL, out_path=NULL) {
 #' @param dst Optional distance matrix. If provided, this should be
 #' `distance_matrix(csd)`.
 #' @return A `tibble` containing a `Distance to <phenotype>` column
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' and `Cell ID <phenotype>` column for each phenotype.
 #' Columns will contain `NA` values where there is no other cell
 #' of the phenotype.
 #' @seealso find_nearest_distance
 #' @md
 #' @keywords internal
+#' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 find_nearest_distance_dist = function(csd, phenotypes=NULL, dst=NULL) {
 
   phenotypes = validate_phenotypes(phenotypes, csd)
@@ -343,6 +363,7 @@ distance_matrix = function (csd) {
 #'   Multiple list items are joined with AND. `NA` is interpreted
 #'   as "select all". It is convenient for lists of selection criteria.
 #' @return A logical vector of length `nrow(csd)` which selects rows
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #'   according to `sel`.
 #' @export
 #' @examples
@@ -360,6 +381,7 @@ distance_matrix = function (csd) {
 #' @md
 #' @seealso [parse_phenotypes] for a convenient way to create selectors
 #' for most common phenotypes.
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 select_rows <- function(csd, sel) {
   stopifnot(is.data.frame(csd))
 
@@ -416,20 +438,25 @@ select_rows <- function(csd, sel) {
 
 #' get Mean Nearest Neighbour Distance
 #'
-#' @param dfs
-#' @param ROIIDs
-#' @param cellDefs
-#' @param Cpheno
-#' @param byROI
-#' @param bySlide
-#' @param selectedROIs
-#' @param mutually_exclusive
-#' @param cellDefColName
+#' @param dfs Function argument documented from the legacy interface.
+#' @param ROIIDs Function argument documented from the legacy interface.
+#' @param cellDefs Function argument documented from the legacy interface.
+#' @param Cpheno Function argument documented from the legacy interface.
+#' @param byROI Function argument documented from the legacy interface.
+#' @param bySlide Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
+#' @param mutually_exclusive Function argument documented from the legacy interface.
+#' @param cellDefColName Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' getMeanNearestNeighbourDistance(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 getMeanNearestNeighbourDistance=function(dfs,ROIIDs,cellDefs,Cpheno,byROI=F,bySlide=T,selectedROIs,mutually_exclusive,cellDefColName="cellDef"){
   results=list()
   results[["NNmxByROI"]]=results[["NNDPhenoByROI"]]=results[["NNDPhenoBySlide"]]=list()
@@ -535,6 +562,7 @@ getMeanNearestNeighbourDistance=function(dfs,ROIIDs,cellDefs,Cpheno,byROI=F,bySl
 #' `to` phenotypes.
 #' @param verbose If TRUE, display progress.
 #' @return A `tibble` containing these columns:
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #'   \describe{
 #'    \item{\code{slide_id}}{Slide ID from the data, if available.}
 #'    \item{\code{source}}{Source field name.}
@@ -568,6 +596,7 @@ getMeanNearestNeighbourDistance=function(dfs,ROIIDs,cellDefs,Cpheno,byROI=F,bySl
 #' @export
 #' @family distance functions
 #' @importFrom magrittr "%>%"
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 count_within_many <- function(csd, pairs, radius, category=NA,
                               phenotype_rules=NULL, verbose=TRUE) {
   # count_within_many_impl_rtree gives incorrect results if category
@@ -595,6 +624,19 @@ count_within_many <- function(csd, pairs, radius, category=NA,
 }
 
 # Helper functions for count_within_batch and count_within_many
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Clean pairs.
+#'
+#' Clean pairs.
+#' @param pairs Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' clean_pairs(pairs = ...)
+#' }
+#' @export
 clean_pairs = function(pairs) {
   # Allow a single pair to be specified as a plain vector
   if (is.character(pairs) && length(pairs)==2)
@@ -615,6 +657,9 @@ clean_pairs = function(pairs) {
 #' @param radii Vector of radii.
 #' @param phenotype_rules Named list of phenotype rules.
 #' @keywords internal
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 count_within_many_impl <- function(csd, name, combos, radii, phenotype_rules) {
   # if (getOption('use.rtree.if.available') &&
   #     requireNamespace('rtree', quietly=TRUE))
@@ -647,6 +692,9 @@ count_within_many_impl <- function(csd, name, combos, radii, phenotype_rules) {
 #' @seealso count_within_many_impl
 #' @md
 #' @keywords internal
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 count_within_many_impl_dist <- function(
     csd, name, combos, radii, phenotype_rules) {
   category = combos %>% purrr::map_chr('category') %>% unique()
@@ -730,6 +778,7 @@ count_within_many_impl_dist <- function(
 #'        produced by calling \code{\link{distance_matrix}}.
 #'
 #' @return A \code{\link{tibble}} with five columns and one row for each
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #'   value in \code{radius}:
 #'   \describe{
 #'    \item{\code{radius}}{The value of \code{radius} for this row.}
@@ -769,6 +818,7 @@ count_within_many_impl_dist <- function(
 #'   select(-within)
 #' }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 count_within <- function(csd, from, to, radius, category=NA, dst=NULL) {
   stop_if_multiple_fields(csd)
   stopifnot(length(radius) > 0, all(radius>0))
@@ -847,10 +897,12 @@ field_column_=function (csd) {
 #' rows and columns. Accepts all formats accepted by
 #' \code{\link{select_rows}}.
 #' @return The input matrix \code{dst} subsetted to include only the
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' rows corresponding to \code{row_selection} and columns
 #' corresponding to \code{col_selection}.
 #' @family distance functions
 #' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 subset_distance_matrix <- function(csd, dst, row_selection, col_selection) {
   # Check for pre-0.1.0.9002 parameter order
   if (is.matrix(csd) && is.data.frame(dst))
@@ -864,20 +916,25 @@ subset_distance_matrix <- function(csd, dst, row_selection, col_selection) {
 
 #' get Counts Within
 #'
-#' @param dfs
-#' @param ROIIDs
-#' @param cellDefs
-#' @param byROI
-#' @param bySlide
-#' @param selectedROIs
-#' @param mutually_exclusive
-#' @param cellDefColName
-#' @param ExclusiveMarkers
+#' @param dfs Function argument documented from the legacy interface.
+#' @param ROIIDs Function argument documented from the legacy interface.
+#' @param cellDefs Function argument documented from the legacy interface.
+#' @param byROI Function argument documented from the legacy interface.
+#' @param bySlide Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
+#' @param mutually_exclusive Function argument documented from the legacy interface.
+#' @param cellDefColName Function argument documented from the legacy interface.
+#' @param ExclusiveMarkers Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' getCountWithin(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 getCountWithin=function(dfs,ROIIDs,cellDefs,byROI=F,bySlide=T,selectedROIs,mutually_exclusive,cellDefColName="cellDef",ExclusiveMarkers){
   results=list()
 
@@ -945,9 +1002,11 @@ getCountWithin=function(dfs,ROIIDs,cellDefs,byROI=F,bySlide=T,selectedROIs,mutua
 #' @param dataGroup1 The group 1 data matrix. Feature by row, sample by column.
 #' @param dataGroup2 The group 2 data matrix. Feature by row, sample by column.
 #' @return A data frame of mean differences and p-values
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @examples
 #' t.result = performTtestsAllClassesOneVsRest(dataMatrix=data_mx,classVector=c("treatment1","treatment2","treatment1","control"));
 #' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 performTtestsAllRows = function(dataGroup1,dataGroup2,...){
   nGroup1 = ncol(dataGroup1)
   nGroup2 = ncol(dataGroup2)
@@ -993,9 +1052,11 @@ performTtestsAllRows = function(dataGroup1,dataGroup2,...){
 #' @param dataGroup1 The group 1 data matrix. Feature by row, sample by column.
 #' @param dataGroup2 The group 2 data matrix. Feature by row, sample by column.
 #' @return A data frame of mean differences and p-values
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @examples
 #' t.result = performTtestsAllClassesOneVsRest(dataMatrix=data_mx,classVector=c("treatment1","treatment2","treatment1","control"));
 #' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 performPairedTtestsAllRows = function(dataGroup1,dataGroup2,...){
   nGroup1 = ncol(dataGroup1)
   nGroup2 = ncol(dataGroup2)
@@ -1026,7 +1087,9 @@ performPairedTtestsAllRows = function(dataGroup1,dataGroup2,...){
 #' @examples
 #' t.result = performTtestsAllClassesOneVsRest(dataMatrix,classVector)
 #' @return A data frame of mean differences and p-values
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 performTtestsAllClassesOneVsRest = function(dataMatrix,classVector,paired=FALSE,...){
   if(ncol(dataMatrix)!=length(classVector)){
     stop("Number of columns of data matrix must be equal to the length of the class vector")
@@ -1065,7 +1128,9 @@ performTtestsAllClassesOneVsRest = function(dataMatrix,classVector,paired=FALSE,
 #' @examples
 #' t.result = performTtestsAllClassesEachPair(dataMatrix,classVector)
 #' @return A data frame of mean differences and p-values
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 performTtestsAllClassesEachPair = function(dataMatrix,classVector,paired=F,...){
   if(ncol(dataMatrix)!=length(classVector)){
     stop("Number of columns of data matrix must be equal to the length of the class vector")
@@ -1097,6 +1162,23 @@ performTtestsAllClassesEachPair = function(dataMatrix,classVector,paired=F,...){
   return(result)
 }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Get Association.
+#'
+#' Get Association.
+#' @param D Function argument documented from the legacy interface.
+#' @param ress Function argument documented from the legacy interface.
+#' @param preds Function argument documented from the legacy interface.
+#' @param ctrlVs Function argument documented from the legacy interface.
+#' @param padjMethod Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' getAssociation(D = ..., ress = ...)
+#' }
+#' @export
 getAssociation=function(D,ress,preds,ctrlVs=NULL,padjMethod="bonferroni"){
   assc=data.frame(outcome=character(),exposure=character(),coef=numeric(),pVal=numeric(),padj=numeric())
   r=0
@@ -1120,6 +1202,23 @@ getAssociation=function(D,ress,preds,ctrlVs=NULL,padjMethod="bonferroni"){
   return(assc)
 }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Get Cor.
+#'
+#' Get Cor.
+#' @param mx Function argument documented from the legacy interface.
+#' @param resdf Function argument documented from the legacy interface.
+#' @param binSize Function argument documented from the legacy interface.
+#' @param method Option controlling how the function runs.
+#' @param alternative Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' getCor(mx = ..., resdf = ...)
+#' }
+#' @export
 getCor=function(mx,resdf,binSize,method="pearson",alternative = "two.sided"){
   is=ncol(mx) %/% binSize +1
   corResult=list()
@@ -1161,6 +1260,8 @@ getCor=function(mx,resdf,binSize,method="pearson",alternative = "two.sided"){
 #' boxplot(tmp)
 #' tmp = robustscale(tmp)
 #' boxplot(tmp$data)
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraPlotsFun.R (2024-04-09).
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraPlotsFun.R (2024-04-09)
 robustscale <- function(data, dim=1, center=TRUE, scale=TRUE, scale_max=Inf,
                         preserveScale = TRUE){
   medians = NULL
@@ -1186,6 +1287,19 @@ robustscale <- function(data, dim=1, center=TRUE, scale=TRUE, scale_max=Inf,
 # Shared helpers `uniCoxPh` and `multiCoxPh`
 # are defined canonically in 06_survival_analysis.R.
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Get Sig Pair.
+#'
+#' Get Sig Pair.
+#' @param corResult.sigs Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' getSigPair(corResult.sigs = ...)
+#' }
+#' @export
 getSigPair=function(corResult.sigs){
   sigPairs=data.frame()
   sigSingles=data.frame()
@@ -1360,6 +1474,30 @@ bi_ripleys_k_mod=function (mif, mnames, r_range = 0:100, edge_correction = "tran
 }
 
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Get Mean Count Within.
+#'
+#' Get Mean Count Within.
+#' @param radii Function argument documented from the legacy interface.
+#' @param dfs Function argument documented from the legacy interface.
+#' @param ROIIDs Function argument documented from the legacy interface.
+#' @param cellDefs Function argument documented from the legacy interface.
+#' @param Cpheno Function argument documented from the legacy interface.
+#' @param byROI Function argument documented from the legacy interface.
+#' @param bySlide Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
+#' @param mutually_exclusive Function argument documented from the legacy interface.
+#' @param cellDefColName Function argument documented from the legacy interface.
+#' @param OP Function argument documented from the legacy interface.
+#' @param aggMethod Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' getMeanCountWithin(radii = ..., dfs = ...)
+#' }
+#' @export
 getMeanCountWithin=function(radii,dfs,ROIIDs,cellDefs,Cpheno,byROI=F,bySlide=T,selectedROIs,mutually_exclusive,cellDefColName="cellDef",OP="OPmIF",aggMethod){
   require(phenoptr)
   require(phenoptrReports)
@@ -1451,50 +1589,55 @@ getMeanCountWithin=function(radii,dfs,ROIIDs,cellDefs,Cpheno,byROI=F,bySlide=T,s
 
 #' PieDonut
 #'
-#' @param data
-#' @param mapping
-#' @param mainCol
-#' @param start
-#' @param addPieLabel
-#' @param addDonutLabel
-#' @param showRatioDonut
-#' @param showRatioPie
-#' @param ratioByGroup
-#' @param showRatioThreshold
-#' @param labelposition
-#' @param labelpositionThreshold
-#' @param r0
-#' @param r1
-#' @param r2
-#' @param explode
-#' @param selected
-#' @param explodePos
-#' @param color
-#' @param pieAlpha
-#' @param donutAlpha
-#' @param maxx
-#' @param showPieName
-#' @param showDonutName
-#' @param title
-#' @param pieLabelSize
-#' @param donutLabelSize
-#' @param titlesize
-#' @param explodePie
-#' @param explodeDonut
-#' @param use.label
-#' @param use.labels
-#' @param family
-#' @param draw
+#' @param data Function argument documented from the legacy interface.
+#' @param mapping Function argument documented from the legacy interface.
+#' @param mainCol Function argument documented from the legacy interface.
+#' @param start Function argument documented from the legacy interface.
+#' @param addPieLabel Function argument documented from the legacy interface.
+#' @param addDonutLabel Function argument documented from the legacy interface.
+#' @param showRatioDonut Function argument documented from the legacy interface.
+#' @param showRatioPie Function argument documented from the legacy interface.
+#' @param ratioByGroup Function argument documented from the legacy interface.
+#' @param showRatioThreshold Function argument documented from the legacy interface.
+#' @param labelposition Function argument documented from the legacy interface.
+#' @param labelpositionThreshold Function argument documented from the legacy interface.
+#' @param r0 Function argument documented from the legacy interface.
+#' @param r1 Function argument documented from the legacy interface.
+#' @param r2 Function argument documented from the legacy interface.
+#' @param explode Function argument documented from the legacy interface.
+#' @param selected Function argument documented from the legacy interface.
+#' @param explodePos Function argument documented from the legacy interface.
+#' @param color Function argument documented from the legacy interface.
+#' @param pieAlpha Function argument documented from the legacy interface.
+#' @param donutAlpha Function argument documented from the legacy interface.
+#' @param maxx Function argument documented from the legacy interface.
+#' @param showPieName Function argument documented from the legacy interface.
+#' @param showDonutName Function argument documented from the legacy interface.
+#' @param title Function argument documented from the legacy interface.
+#' @param pieLabelSize Function argument documented from the legacy interface.
+#' @param donutLabelSize Function argument documented from the legacy interface.
+#' @param titlesize Function argument documented from the legacy interface.
+#' @param explodePie Function argument documented from the legacy interface.
+#' @param explodeDonut Function argument documented from the legacy interface.
+#' @param use.label Function argument documented from the legacy interface.
+#' @param use.labels Function argument documented from the legacy interface.
+#' @param family Function argument documented from the legacy interface.
+#' @param draw Function argument documented from the legacy interface.
 #'
 #' @import ggplot2
 #' @import grid
 #' @import tidyr
 #' @importFrom gridExtra grid.arrange
 #' @importFrom gtable gtable_add_grob
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' PieDonut(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 PieDonut=function(
     data, mapping,
     mainCol=NULL,
@@ -1887,6 +2030,19 @@ transparent=function (size = 0) {
   temp
 }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Get Pie Donut Legend.
+#'
+#' Get Pie Donut Legend.
+#' @param mainCol Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' getPieDonutLegend(mainCol = ...)
+#' }
+#' @export
 getPieDonutLegend=function(mainCol){
   require(ggplot2)
   tmp=ggplot(data=data.frame(Marker=names(mainCol),Value=1), aes(x=Marker, fill=Marker)) +
@@ -1897,6 +2053,20 @@ getPieDonutLegend=function(mainCol){
   return(leg)
 }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Plot Pie Donut By Slides.
+#'
+#' Plot Pie Donut By Slides.
+#' @param slides2plot Function argument documented from the legacy interface.
+#' @param slideMapSample.dict Function argument documented from the legacy interface.
+#' @return A plot object, grob, or side-effect plot generated by the function.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' plotPieDonutBySlides(...)
+#' }
+#' @export
 plotPieDonutBySlides=function(slides2plot,slideMapSample.dict){
   ROIs2plot=unlist(slideMapSample.dict[slides2plot])
   nmax=max(sapply(slideMapSample.dict[slides2plot], length))
@@ -1919,18 +2089,23 @@ plotPieDonutBySlides=function(slides2plot,slideMapSample.dict){
 
 #' plot_immunoflo
 #'
-#' @param mif
-#' @param plot_title
-#' @param mnames
-#' @param mcolors
-#' @param cell_type
-#' @param filename
-#' @param path
+#' Plot multiplex immunofluorescence marker summaries.
+#' @param mif Function argument documented from the legacy interface.
+#' @param plot_title Function argument documented from the legacy interface.
+#' @param mnames Function argument documented from the legacy interface.
+#' @param mcolors Function argument documented from the legacy interface.
+#' @param cell_type Function argument documented from the legacy interface.
+#' @param filename Function argument documented from the legacy interface.
+#' @param path Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' plot_immunoflo(...)
+#' }
 plot_immunoflo=function (mif, plot_title, mnames, mcolors = NULL, cell_type = NULL, base_size=7, dot_size=2,
                          filename = NULL, path = NULL)
 {
@@ -1996,14 +2171,19 @@ plot_immunoflo=function (mif, plot_title, mnames, mcolors = NULL, cell_type = NU
 
 #' subset mif object to the ones having response/outcome data only
 #'
-#' @param mif
-#' @param selectedROIs
-#' @param resVar
+#' @param mif Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
+#' @param resVar Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' hasResVarOnly(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 hasResVarOnly=function(mif,selectedROIs,resVar) {
   tmp=mif$clinical%>%
     filter(mrn %in% mif$clinical$mrn[apply(mif$clinical[resVar],1,function(x) any(!is.na(x)))]) %>%
@@ -2015,14 +2195,19 @@ hasResVarOnly=function(mif,selectedROIs,resVar) {
 
 #' Trim mif objects
 #'
-#' @param mif
-#' @param selectedROIs
-#' @param resVar
+#' @param mif Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
+#' @param resVar Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' trimMif4plots(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 trimMif4plots=function(mif,selectedROIs,resVar=NULL){
   if(!is.null(resVar)){
     selectedROIs=hasResVarOnly(mif,selectedROIs,resVar)
@@ -2037,14 +2222,19 @@ trimMif4plots=function(mif,selectedROIs,resVar=NULL){
 
 #' plot paired slides
 #'
-#' @param pairedSlides
-#' @param mif
-#' @param selectedROIs
+#' @param pairedSlides Function argument documented from the legacy interface.
+#' @param mif Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' pairedSlidePlots(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 pairedSlidePlots=function(pairedSlides,mif,selectedROIs){
   selectedROIs=lapply(selectedROIs, function(i) i[i%in%names(mif$spatial)])
   slideCode=pairedSlides_%>%unlist%>%setNames(rep(1,length(.)),.)
@@ -2066,19 +2256,24 @@ pairedSlidePlots=function(pairedSlides,mif,selectedROIs){
 
 #' plot Immune Highlights
 #'
-#' @param mif
-#' @param selectedROIs
-#' @param featureName
-#' @param featureType
-#' @param trait
-#' @param compartment
-#' @param FeatureTable
-#' @param marker
+#' @param mif Function argument documented from the legacy interface.
+#' @param selectedROIs Function argument documented from the legacy interface.
+#' @param featureName Function argument documented from the legacy interface.
+#' @param featureType Function argument documented from the legacy interface.
+#' @param trait Function argument documented from the legacy interface.
+#' @param compartment Function argument documented from the legacy interface.
+#' @param FeatureTable Function argument documented from the legacy interface.
+#' @param marker Function argument documented from the legacy interface.
 #'
-#' @return
+#' @return The value returned by the current implementation.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' plotImmuneHighlights(...)
+#' }
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
 plotImmuneHighlights=function(mif,selectedROIs,featureName,featureType,trait,compartment,FeatureTable,marker=NULL){
   mif=trimMif4plots(mif,selectedROIs = selectedROIs)
   tmp=sapply(c(featureName,featureType,compartment), is.null)

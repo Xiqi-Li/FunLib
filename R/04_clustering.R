@@ -27,6 +27,28 @@
 #   RECOMMEND: Use GBMnat/R/funcsGBMnat.R (2025-08-11) as most recently updated.
 # =============================================================================
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Feature selection for clustering (MAD/CV/DQ/GUMBEL/ATC)
+#'
+#' Feature selection for clustering (MAD/CV/DQ/GUMBEL/ATC)
+#' @param expressions Function argument documented from the legacy interface.
+#' @param method Option controlling how the function runs.
+#' @param mad_top_n Function argument documented from the legacy interface.
+#' @param mad_top_quantile Function argument documented from the legacy interface.
+#' @param cv_top_n Function argument documented from the legacy interface.
+#' @param cv_top_mean_quantile Function argument documented from the legacy interface.
+#' @param dq_top_mean_quantile Function argument documented from the legacy interface.
+#' @param dq_top_var_quantile Function argument documented from the legacy interface.
+#' @param gumbel_p_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param remove_outlier Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' prepare_unsupervised_data(expressions = ..., method = ...)
+#' }
+#' @export
 prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL"),mad_top_n=-1,mad_top_quantile=0.75,cv_top_n=-1,cv_top_mean_quantile=0.5,dq_top_mean_quantile=0.5,dq_top_var_quantile=0.5,gumbel_p_cutoff=0.1,remove_outlier=F){
   library(goeveg)
   library(ordinal)
@@ -101,12 +123,14 @@ prepare_unsupervised_data<-function(expressions,method=c("MAD","CV","DQ","GUMBEL
 #' @param max.nc \code{numeric()}. Maximal number of clusters, between 2 and (number of objects - 1), greater or equal to min.nc. By default, max.nc=15.
 #'
 #' @return \code{list()} containing \code{Best.nc()} (statistics for various indices) and \code{Best.NumberofCluster()} (best number of clusters).
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' result<-estimate_bestNumberofClusters(data=data,scale='none',data_preTreat = F,max.nc = 8)
 #' }
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
 estimate_bestNumberofClusters<-function(
     data,
     scale=c("row","column","none"),
@@ -174,7 +198,10 @@ estimate_bestNumberofClusters<-function(
 #' @param bestnumberofclusters integer vector, containing mapped cluster_id from target clusters
 #'
 #' @return integer vector, containing mapped cluster_id from target clusters
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
 #'
+#' @export
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
 map_clusters<-function(query_clusters,target_clusters,bestnumberofclusters){
   stopifnot("query clusters should be as same length as target clusters!"=length(query_clusters)==length(target_clusters))
   cluster_table<-table(query_clusters,target_clusters)
@@ -202,22 +229,142 @@ map_clusters<-function(query_clusters,target_clusters,bestnumberofclusters){
 }
 
 # unified cluster call (kmeans,pam,hclust,fuzzy,mclust,apclust,dbscan,mclclust,specc,kkmean,skmeans,nmf,som), not export for user
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Kmeans Cluster.
+#'
+#' Kmeans Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' kmeansCluster(...)
+#' }
+#' @export
 kmeansCluster<-function(data,k,...){return(stats::kmeans(t(data),centers=k,...)$cluster)}
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Pam Cluster.
+#'
+#' Pam Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' pamCluster(...)
+#' }
+#' @export
 pamCluster<-function(data,k,...){return(cluster::pam(t(data),k = k,...)$clustering)}
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Hclust Cluster.
+#'
+#' Hclust Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' hclustCluster(...)
+#' }
+#' @export
 hclustCluster<-function(data,k,...){
   hclust.out <- stats::hclust(dist(t(data)))
   hclust_clusters<-stats::cutree(hclust.out,k=k,...)
   return(hclust_clusters)
 }
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Fuzzy Cluster.
+#'
+#' Fuzzy Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' fuzzyCluster(...)
+#' }
+#' @export
 fuzzyCluster<-function(data,k,...){return(cluster::fanny(t(data),k=k,...)$clustering)}
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Mclust Cluster.
+#'
+#' Mclust Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' mclustCluster(...)
+#' }
+#' @export
 mclustCluster<-function(data,k,...){return(mclust::Mclust(t(data),G=k)$classification)}
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Apclust Cluster.
+#'
+#' Apclust Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' apclustCluster(...)
+#' }
+#' @export
 apclustCluster<-function(data,k,...){
   apclust_clusters<-apcluster::apclusterK(s=negDistMat(r=2),x=t(data),K=k)
   apclust_clusters<-rep(1:length(apclust_clusters@clusters),times=sapply(apclust_clusters@clusters,length))[order(unlist(apclust_clusters@clusters))]
   names(apclust_clusters)<-colnames(data)
   return(apclust_clusters)
 }
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Hdbscan Cluster.
+#'
+#' Hdbscan Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' hdbscanCluster(...)
+#' }
+#' @export
 hdbscanCluster<-function(data,k,...){return(dbscan::hdbscan(t(data),minPts = k)$cluster+1)}
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Mcl Cluster.
+#'
+#' Mcl Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' mclCluster(...)
+#' }
+#' @export
 mclCluster<-function(data,k,...){
   cor_mat<-cor(data)
   mcl_clusters<-MCL::mcl(cor_mat,addLoops = T,ESM=T,allow1=T)$Cluster
@@ -225,6 +372,21 @@ mclCluster<-function(data,k,...){
   return(mcl_clusters)
 }
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Specc Cluster.
+#'
+#' Specc Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' speccCluster(...)
+#' }
+#' @export
 speccCluster<-function(data,k,...){
   require(kernlab)
   specc_clusters<-kernlab::specc(t(data),centers=k,...)@.Data
@@ -232,6 +394,21 @@ speccCluster<-function(data,k,...){
   return(specc_clusters)
 }
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Kkmeans Cluster.
+#'
+#' Kkmeans Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' kkmeansCluster(...)
+#' }
+#' @export
 kkmeansCluster<-function(data,k,...){
   require(kernlab)
   kkmeans_cluster<-kernlab::kkmeans(t(data),centers=k,...)@.Data
@@ -239,12 +416,42 @@ kkmeansCluster<-function(data,k,...){
   return(kkmeans_cluster)
 }
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Skmeans Cluster.
+#'
+#' Skmeans Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' skmeansCluster(...)
+#' }
+#' @export
 skmeansCluster<-function(data,k,...){
   skmeans_cluster<-skmeans::skmeans(x=t(data),k=k,...)$cluster
   names(skmeans_cluster)<-colnames(data)
   return(skmeans_cluster)
 }
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Nmf Cluster.
+#'
+#' Nmf Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' nmfCluster(...)
+#' }
+#' @export
 nmfCluster<-function(data,k,...){
   require(NMF)
   data<-(data-min(data,na.rm=T))/(max(data,na.rm=T)-min(data,na.rm=T))
@@ -254,6 +461,21 @@ nmfCluster<-function(data,k,...){
   return(nmf_cluster)
 }
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Som Cluster.
+#'
+#' Som Cluster.
+#' @param data Input data frame or matrix.
+#' @param k Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' somCluster(...)
+#' }
+#' @export
 somCluster<-function(data,k,...){
   kr = floor(sqrt(ncol(data)))
   somfit = kohonen::som(t(data), grid = somgrid(kr, kr, "hexagonal"), ...)
@@ -297,6 +519,7 @@ somCluster<-function(data,k,...){
 #' @importFrom ggcorrplot ggcorrplot
 #'
 #' @return list, containing best partition of sample, and co-clusters derived from multiple clustering algorithms.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
 #'
 #' @export
 #'
@@ -305,6 +528,7 @@ somCluster<-function(data,k,...){
 #' multiCluster(data=data,scale='none',data_preTreat = T)
 #' }
 #'
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
 multiCluster<-function(
     data,
     scale=c("row","column","none"),
@@ -408,6 +632,30 @@ multiCluster<-function(
 }
 
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
+#' Parallel consensus clustering (future framework)
+#'
+#' Parallel consensus clustering (future framework)
+#' @param data Input data frame or matrix.
+#' @param scale Option controlling how the function runs.
+#' @param method Option controlling how the function runs.
+#' @param subFeatureSize Function argument documented from the legacy interface.
+#' @param subSampleSize Function argument documented from the legacy interface.
+#' @param noise Function argument documented from the legacy interface.
+#' @param cutFUN Function argument documented from the legacy interface.
+#' @param nTimes Function argument documented from the legacy interface.
+#' @param clusters Numeric tuning parameter used by the existing implementation.
+#' @param verbose Function argument documented from the legacy interface.
+#' @param num_cores Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
+#'
+#' @examples
+#' \dontrun{
+#' future_consensusCluster(...)
+#' }
+#' @export
 future_consensusCluster<-function(data,scale=c("row","column","none"),method=c("bootstrap","perturb","combine"),subFeatureSize=0.8,subSampleSize=1,noise=1,cutFUN,nTimes=100,clusters=2,verbose=F,num_cores,...){
   #	A function that, given a data matrix, returns a vector of cluster assignments. Examples of functions with this behavior are cutHclust, cutKmeans, cutPam, and cutRepeatedKmeans, or kmeansCluster,pamCluster,hclustCluster,fuzzyCluster,mclustCluster,apclustCluster,hdbscanCluster,mclCluster,speccCluster,kkmeansCluster,skmeansCluster,nmfCluster,somCluster
   # library(future.apply)
@@ -533,12 +781,14 @@ future_consensusCluster<-function(data,scale=c("row","column","none"),method=c("
 #' @import kernlab
 #' @import apcluster
 #' @return \code{data.frame()}, containing possibility of co-clustering.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' results<-future_consensusCluster(data,method='combine',clusters=4)
 #' }
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
 consensusCluster<-function(data,scale=c("row","column","none"),method=c("bootstrap","perturb","combine"),subFeatureSize=0.8,subSampleSize=1,noise=1,cutFUN,nTimes=100,clusters=2,verbose=F,...){
   #	A function that, given a data matrix, returns a vector of cluster assignments. Examples of functions with this behavior are cutHclust, cutKmeans, cutPam, and cutRepeatedKmeans, or kmeansCluster,pamCluster,hclustCluster,fuzzyCluster,mclustCluster,apclustCluster,hdbscanCluster,mclCluster,speccCluster,kkmeansCluster,skmeansCluster,nmfCluster,somCluster
   scale=match.arg(scale)

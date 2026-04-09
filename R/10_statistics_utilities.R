@@ -45,12 +45,34 @@ is.empty.data.frame<-function(df){
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Return mode (most frequent) value
+#'
+#' Return mode (most frequent) value
+#' @param v Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' getmode(c("A", "B", "A"))
+#' @export
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Remove outliers by IQR
+#'
+#' Remove outliers by IQR
+#' @param data Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' removeoutlier(data = ...)
+#' }
+#' @export
 removeoutlier<-function(data){
   quartiles<-stats::quantile(data,probs=c(0.25,0.75),na.rm=T)
   IQR<-stats::IQR(data)
@@ -61,6 +83,19 @@ removeoutlier<-function(data){
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Set one or more columns as row names
+#'
+#' Set one or more columns as row names
+#' @param df Input data object used by the function.
+#' @param columns Column name or column selection used by the existing implementation.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' set_column_as_rownames(df = ..., columns = ...)
+#' }
+#' @export
 set_column_as_rownames<-function(df,columns){
   if(length(columns)>1){
     rn=apply(df[,columns],1,function(row){paste(row,collapse = "_")})
@@ -73,6 +108,21 @@ set_column_as_rownames<-function(df,columns){
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Quantile normalization within class/batch groups
+#'
+#' Quantile normalization within class/batch groups
+#' @param counts Input data object used by the function.
+#' @param sample_info Input data object used by the function.
+#' @param class_factors Function argument documented from the legacy interface.
+#' @param batch_factors Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' discrete_quantile(counts = ..., sample_info = ...)
+#' }
+#' @export
 discrete_quantile<-function(counts,sample_info,class_factors,batch_factors){
   assertthat::are_equal(colnames(counts),sample_info[["Sample_ID"]])
   if(length(batch_factors)>1){
@@ -96,11 +146,41 @@ discrete_quantile<-function(counts,sample_info,class_factors,batch_factors){
 # are defined canonically in 01_genomic_data.R.
 
 # SOURCE: functions.R (2026-03-02)
+#' Filter assay info by sample list
+#'
+#' Filter assay info by sample list
+#' @param assay_info Input data object used by the function.
+#' @param sample_info Input data object used by the function.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' filter_assay_info(assay_info = ..., sample_info = ...)
+#' }
+#' @export
 filter_assay_info<-function(assay_info,sample_info){
   return(assay_info[assay_info$Sample_ID %in% sample_info$Sample_ID,])
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Standardize info table formatting (columns, values)
+#'
+#' Standardize info table formatting (columns, values)
+#' @param infotable Input data object used by the function.
+#' @param nchar_ABBV Function argument documented from the legacy interface.
+#' @param feature_dictionary Function argument documented from the legacy interface.
+#' @param convert_terms Function argument documented from the legacy interface.
+#' @param column_content_operation Function argument documented from the legacy interface.
+#' @param check_rownames Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' format_infotable(infotable = ..., nchar_ABBV = ...)
+#' }
+#' @export
 format_infotable<-function(infotable,nchar_ABBV=5,feature_dictionary=NULL,convert_terms=F,column_content_operation=list(),check_rownames=F){
   column_names<-colnames(infotable)
   if(!is.null(feature_dictionary)){
@@ -202,6 +282,24 @@ format_infotable<-function(infotable,nchar_ABBV=5,feature_dictionary=NULL,conver
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Extract longitudinally paired samples
+#'
+#' Extract longitudinally paired samples
+#' @param sample_info Input data object used by the function.
+#' @param assay_col Column name or column selection used by the existing implementation.
+#' @param patient_id_col Column name or column selection used by the existing implementation.
+#' @param sample_id_col Column name or column selection used by the existing implementation.
+#' @param timepoint_col Column name or column selection used by the existing implementation.
+#' @param timepoint_terms Function argument documented from the legacy interface.
+#' @param compact Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' extract_paired_sample_info(sample_info = ..., assay_col = ...)
+#' }
+#' @export
 extract_paired_sample_info<-function(sample_info,assay_col="Assay",patient_id_col="Patient_ID",sample_id_col="Sample_ID",timepoint_col="Timepoint",timepoint_terms=c("Baseline","TP2"),compact=F){
   sample_info<-sample_info[sample_info[[timepoint_col]] %in% timepoint_terms,]
   paired_samples<-NULL
@@ -228,6 +326,24 @@ extract_paired_sample_info<-function(sample_info,assay_col="Assay",patient_id_co
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Read + format info table (caches formatted version)
+#'
+#' Read + format info table (caches formatted version)
+#' @param origin_dir Function argument documented from the legacy interface.
+#' @param origin_info_file Function argument documented from the legacy interface.
+#' @param origin_sep Function argument documented from the legacy interface.
+#' @param destination_dir Function argument documented from the legacy interface.
+#' @param destination_info_file Function argument documented from the legacy interface.
+#' @param destination_sep Function argument documented from the legacy interface.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The object returned after reading the requested input.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' read_info(origin_dir = ..., origin_info_file = ...)
+#' }
+#' @export
 read_info<-function(origin_dir,origin_info_file,origin_sep,destination_dir,destination_info_file,destination_sep,...){
   if(!dir.exists(destination_dir)){
     message("No destination directory exists!\n")
@@ -274,6 +390,21 @@ read_info<-function(origin_dir,origin_info_file,origin_sep,destination_dir,desti
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Read datasets from MD Anderson Foundry API
+#'
+#' Read datasets from MD Anderson Foundry API
+#' @param foundry.hostname Function argument documented from the legacy interface.
+#' @param foundry.token Function argument documented from the legacy interface.
+#' @param rid Function argument documented from the legacy interface.
+#' @param aliases.yml Function argument documented from the legacy interface.
+#' @return The object returned after reading the requested input.
+#' @details Source provenance: foundry utility addition (2026-04-09).
+#'
+#' @examples
+#' \dontrun{
+#' read_foundry_datasets(foundry.hostname = ..., foundry.token = ...)
+#' }
+#' @export
 read_foundry_datasets<-function(foundry.hostname="foundry.mdanderson.edu",foundry.token,rid,aliases.yml="~/.foundry/aliases.yml"){
   stopifnot("token missing!"=!missing(foundry.token))
   options(foundry.hostname = foundry.hostname,foundry.token = foundry.token)
@@ -299,6 +430,21 @@ read_foundry_datasets<-function(foundry.hostname="foundry.mdanderson.edu",foundr
 }
 
 # SOURCE: foundry utility addition (2026-04-09)
+#' Write a dataset to MD Anderson Foundry API
+#'
+#' Write a dataset to MD Anderson Foundry API
+#' @param df Input data object used by the function.
+#' @param foundry.hostname Function argument documented from the legacy interface.
+#' @param foundry.token Function argument documented from the legacy interface.
+#' @param alias Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' write_foundry_datasets(df = ..., foundry.hostname = ...)
+#' }
+#' @export
 write_foundry_datasets<-function(df,foundry.hostname="foundry.mdanderson.edu",foundry.token,alias){
   stopifnot("token missing!"=!missing(foundry.token))
   options(foundry.hostname = foundry.hostname,foundry.token = foundry.token)
@@ -308,6 +454,21 @@ write_foundry_datasets<-function(df,foundry.hostname="foundry.mdanderson.edu",fo
 # --- SECTION 2: SURVIVAL STATISTICS ------------------------------------------
 
 # SOURCE: functions.R (2026-03-02)
+#' Univariate Cox regression (p-value or HR)
+#'
+#' Univariate Cox regression (p-value or HR)
+#' @param time Function argument documented from the legacy interface.
+#' @param status Function argument documented from the legacy interface.
+#' @param covariate Function argument documented from the legacy interface.
+#' @param returnvalue Option controlling how the function runs.
+#' @return The result object produced by the survival analysis.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' uni_cox(time = ..., status = ...)
+#' }
+#' @export
 uni_cox<-function(time,status,covariate,returnvalue=c("pvalue","coef","both")){
   if(is.null(returnvalue)){
     returnvalue="pvalue"} else{
@@ -326,6 +487,19 @@ uni_cox<-function(time,status,covariate,returnvalue=c("pvalue","coef","both")){
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Calculate risk score from glmnet betas
+#'
+#' Calculate risk score from glmnet betas
+#' @param selected_betas Function argument documented from the legacy interface.
+#' @param covariates Input data object used by the function.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' cal_riskscore(selected_betas = ..., covariates = ...)
+#' }
+#' @export
 cal_riskscore<-function(selected_betas,covariates){
   selected_covariates<-covariates[names(selected_betas),]
   risk_scores<-colSums((selected_covariates-apply(selected_covariates,1,mean))*selected_betas)
@@ -333,6 +507,26 @@ cal_riskscore<-function(selected_betas,covariates){
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Survival-associated signature extraction (glmnet)
+#'
+#' Survival-associated signature extraction (glmnet)
+#' @param time Function argument documented from the legacy interface.
+#' @param status Function argument documented from the legacy interface.
+#' @param covariates Input data object used by the function.
+#' @param uni_ret Function argument documented from the legacy interface.
+#' @param beta_filter Function argument documented from the legacy interface.
+#' @param uni_cox_pvalue_cutoff Function argument documented from the legacy interface.
+#' @param uni_cox_coef_cutoff Function argument documented from the legacy interface.
+#' @param glmnet_alpha Function argument documented from the legacy interface.
+#' @param scale Function argument documented from the legacy interface.
+#' @return The result object produced by the survival analysis.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' survivalSignatures(time = ..., status = ...)
+#' }
+#' @export
 survivalSignatures<-function(time,status,covariates,uni_ret="pvalue",beta_filter=0,uni_cox_pvalue_cutoff=0.1,uni_cox_coef_cutoff=0,glmnet_alpha=0,scale=T){
   uni_cox_results_<-apply(covariates,1,function(row){uni_cox(time=time,status=status,covariate=row,returnvalue = uni_ret)})
   uni_cox_results<-as.data.frame(matrix(uni_cox_results_,nrow=nrow(covariates),byrow=T))
@@ -375,6 +569,26 @@ survivalSignatures<-function(time,status,covariates,uni_ret="pvalue",beta_filter
 }
 
 # SOURCE: functions.R (2026-03-02)
+#' Nearest-neighbour group prediction
+#'
+#' Nearest-neighbour group prediction
+#' @param sample_feature Input data object used by the function.
+#' @param group1_features Input data object used by the function.
+#' @param group2_features Input data object used by the function.
+#' @param sample_groups Function argument documented from the legacy interface.
+#' @param dist_method Function argument documented from the legacy interface.
+#' @param aggregate_method Function argument documented from the legacy interface.
+#' @param permutation Function argument documented from the legacy interface.
+#' @param resample_size Function argument documented from the legacy interface.
+#' @param repeats Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: functions.R (2026-03-02).
+#'
+#' @examples
+#' \dontrun{
+#' predictGroup(sample_feature = ..., group1_features = ...)
+#' }
+#' @export
 predictGroup<-function(sample_feature,group1_features,group2_features,sample_groups=c("Group1","Group2"),dist_method="euclidean",aggregate_method="average",permutation=F,resample_size=0.8,repeats=100){
   cat("make sure predicted sample is not in the group1 nor the group2!\n\n")
   cat("make sure all data normalized at same scale!\n\n")
@@ -423,6 +637,19 @@ predictGroup<-function(sample_feature,group1_features,group2_features,sample_gro
 # SOURCE: Pembro/Pembro_codebase/funcsInPembro_codebase.R (2026-01-23)
 
 # SOURCE: funcsInPembro_codebase.R (2026-01-23)
+#' Smart title-case formatting (preserves small words)
+#'
+#' Smart title-case formatting (preserves small words)
+#' @param x Function argument documented from the legacy interface.
+#' @param small_words Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: Pembro/Pembro_codebase/funcsInPembro_codebase.R (2026-01-23).
+#'
+#' @examples
+#' \dontrun{
+#' title_case_smart(x = ..., small_words = ...)
+#' }
+#' @export
 title_case_smart <- function(
     x,
     small_words = c("a","an","and","as","at","but","by","for","in","nor",
@@ -441,6 +668,20 @@ title_case_smart <- function(
 }
 
 # SOURCE: funcsInPembro_codebase.R (2026-01-23)
+#' Add adjusted p-values (BH or other) to a table
+#'
+#' Add adjusted p-values (BH or other) to a table
+#' @param df Input data object used by the function.
+#' @param p_col Column name or column selection used by the existing implementation.
+#' @param method Option controlling how the function runs.
+#' @param group_cols Column name or column selection used by the existing implementation.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: funcsInPembro_codebase.R (2026-01-23).
+#'
+#' @examples
+#' df <- data.frame(group = c("A", "A", "B"), p_value = c(0.01, 0.2, 0.03))
+#' add_p_adjust(df, group_cols = "group")
+#' @export
 add_p_adjust <- function(df, p_col = "p_value", method = "BH", group_cols = NULL) {
   if (is.null(group_cols)) {
     df[[paste0(p_col, "_adj")]] <- p.adjust(df[[p_col]], method = method)
@@ -454,6 +695,21 @@ add_p_adjust <- function(df, p_col = "p_value", method = "BH", group_cols = NULL
 }
 
 # SOURCE: funcsInPembro_codebase.R (2026-01-23)
+#' Two-group comparison (t-test or Wilcoxon)
+#'
+#' Two-group comparison (t-test or Wilcoxon)
+#' @param dat Input data object used by the function.
+#' @param value_col Column name or column selection used by the existing implementation.
+#' @param group_col Column name or column selection used by the existing implementation.
+#' @param method Option controlling how the function runs.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: funcsInPembro_codebase.R (2026-01-23).
+#'
+#' @examples
+#' \dontrun{
+#' compare_two_groups(dat = ..., value_col = ...)
+#' }
+#' @export
 compare_two_groups <- function(dat, value_col = "RankChange", group_col = "clinical_benefit",
                                method = c("t.test", "wilcox")) {
   method <- match.arg(method)
@@ -478,6 +734,21 @@ compare_two_groups <- function(dat, value_col = "RankChange", group_col = "clini
 }
 
 # SOURCE: funcsInPembro_codebase.R (2026-01-23)
+#' Two-group comparison with error handling
+#'
+#' Two-group comparison with error handling
+#' @param dat Input data object used by the function.
+#' @param value_col Column name or column selection used by the existing implementation.
+#' @param group_col Column name or column selection used by the existing implementation.
+#' @param method Option controlling how the function runs.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: funcsInPembro_codebase.R (2026-01-23).
+#'
+#' @examples
+#' \dontrun{
+#' safe_compare_two_groups(dat = ..., value_col = ...)
+#' }
+#' @export
 safe_compare_two_groups <- function(dat, value_col, group_col, method = "wilcox") {
   tryCatch(
     compare_two_groups(dat, value_col = value_col, group_col = group_col, method = method),
@@ -492,6 +763,29 @@ safe_compare_two_groups <- function(dat, value_col, group_col, method = "wilcox"
 # SOURCE: funcsInPembro_codebase.R (2026-01-23)
 # Association testing (lm/logistic) or correlation (rstatix) across features x outcomes.
 # Supports groupCol for stratified analysis and padjByOutcome for per-outcome FDR.
+# SOURCE: funcsInPembro_codebase.R (2026-01-23)
+#' Association/correlation testing across features
+#'
+#' Association/correlation testing across features
+#' @param D Input data object used by the function.
+#' @param features Function argument documented from the legacy interface.
+#' @param outcomes Function argument documented from the legacy interface.
+#' @param method Option controlling how the function runs.
+#' @param ctrlVs Function argument documented from the legacy interface.
+#' @param padjMethod Option controlling how the function runs.
+#' @param padjByOutcome Function argument documented from the legacy interface.
+#' @param corMethod Option controlling how the function runs.
+#' @param alternative Function argument documented from the legacy interface.
+#' @param binSize Function argument documented from the legacy interface.
+#' @param groupCol Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: funcsInPembro_codebase.R (2026-01-23).
+#'
+#' @examples
+#' \dontrun{
+#' compareFeatures(D = ..., features = ...)
+#' }
+#' @export
 compareFeatures <- function(D,
                             features,
                             outcomes,

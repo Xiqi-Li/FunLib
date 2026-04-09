@@ -33,10 +33,12 @@
 #' @param timeUnit time unit for the duration column.
 #'
 #' @return a data frame with the medium survival time for each group.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
 #' @export getKM_medium
 #'
 #' @import dplyr survival
 
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
 getKM_medium=function(survdf,duration,variable=NULL,censoring, conversion="d2m",timeUnit="month"){
   require(dplyr)
   require(survival)
@@ -80,10 +82,12 @@ getKM_medium=function(survdf,duration,variable=NULL,censoring, conversion="d2m",
 #' @param table_base_size annotation font size.
 #'
 #' @return a Kaplan-Meier plot.
+#' @details Source provenance: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11).
 #' @importFrom survminer surv_fit
 #'
 #' @export
 #'
+# SOURCE: GBM/XL_figures/vDotJun0823/GBMnat/R/funcsGBMnat.R (2025-08-11)
 plotKM=function(survdf,duration,censoring,variable=NULL,conversion="d2m",statOnly=F,palette=NULL,OrderedVarFactor=NULL,plotTitle=NULL,table_base_size=6,timeUnit="month",timeYLab="OS"){
   require(survminer)
   require("survival")
@@ -219,6 +223,21 @@ plotKM=function(survdf,duration,censoring,variable=NULL,conversion="d2m",statOnl
 
 }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Univariate Cox proportional hazards
+#'
+#' Univariate Cox proportional hazards
+#' @param time Function argument documented from the legacy interface.
+#' @param status Function argument documented from the legacy interface.
+#' @param covariateMx Function argument documented from the legacy interface.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' uniCoxPh(...)
+#' }
+#' @export
 uniCoxPh=function(time,status,covariateMx){
   covariate_names=setNames(rownames(covariateMx),paste("feature",1:nrow(covariateMx),sep = ""))
   rownames(covariateMx)=names(covariate_names)
@@ -256,6 +275,21 @@ uniCoxPh=function(time,status,covariateMx){
   return(res)
 }
 
+# SOURCE: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02)
+#' Multivariate Cox proportional hazards
+#'
+#' Multivariate Cox proportional hazards
+#' @param time Function argument documented from the legacy interface.
+#' @param status Function argument documented from the legacy interface.
+#' @param covariateMx Function argument documented from the legacy interface.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: woodman_lab.XLi23/mIFvectra/R/vectraStatsFun.R (2024-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' multiCoxPh(...)
+#' }
+#' @export
 multiCoxPh=function(time,status,covariateMx){
   covariate_names=setNames(rownames(covariateMx),paste("feature",1:nrow(covariateMx),sep = ""))
   rownames(covariateMx)=names(covariate_names)

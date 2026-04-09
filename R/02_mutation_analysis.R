@@ -39,8 +39,10 @@
 #' @param tcga_indel_table data.frame. simplified TCGA ins/del frequency table.
 #'
 #' @return list. contain combined simplified tcga snp/indel frequency table
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 get_combined_tcga_mutation_table<-function(tcga_tumor_abbreviation="",tcga_studies,tcga_snp_table,tcga_indel_table){
   stopifnot("tumor type is not in tcga tumor type list!"=tcga_tumor_abbreviation %in% tcga_studies$Study_Abbreviation)
   tcga_project<-paste("TCGA",tcga_tumor_abbreviation,sep="-")
@@ -125,9 +127,12 @@ get_combined_tcga_mutation_table<-function(tcga_tumor_abbreviation="",tcga_studi
 #' @param traced_mutect_file character. default traced_pindel.txt, file name for deposit results after each operation (filter sets) if save_traced_mutect=TRUE.
 #'
 #' @return data.frame. filtered mutects(snp).
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #'
 
 
+#' @export
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 filter_mutects<-function(mutects, traced_columns=c("Sample_ID","gene","type","chr","start","end"),
                          low_purity_filter=T,low_purity_samples,
                          treat_noisy_samples=F,noisy_samples=c(),
@@ -441,9 +446,12 @@ filter_mutects<-function(mutects, traced_columns=c("Sample_ID","gene","type","ch
 
 #'
 #' @return data.frame. filtered pindels.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #'
 
 
+#' @export
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 filter_pindels<-function(pindels,traced_columns=c("Sample_ID","gene","type","chr","start","end"),
                          low_purity_filter=T,low_purity_samples,
                          treat_noisy_samples=F,noisy_samples=c(),
@@ -781,9 +789,11 @@ filter_pindels<-function(pindels,traced_columns=c("Sample_ID","gene","type","chr
 #' @param pynbs_nonSilent_variant_classication character. nonSilent variant classification for pyNBS.
 #'
 #' @return data.frame. converted data.frame fit specifid algorithm
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 convert_mutations<-function(mutations,target=c("mutsig2cv","maftools","pynbs"),msc_snp_conversion_dict,msc_indel_conversion_dict,maftools_mutation_conversion_dict,pynbs_nonSilent_variant_classication){
   target=match.arg(target)
   snps<-mutations[mutations$type=="SNP",]
@@ -919,12 +929,14 @@ convert_mutations<-function(mutations,target=c("mutsig2cv","maftools","pynbs"),m
 #' @param ... list. other params used for oncoprint.
 #'
 #' @return data.frame. mutations.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
 
 
 
 
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 complex_oncoplot<-function(snp_indels,
                            for_row="Hugo_Symbol",
                            for_column="Tumor_Sample_Barcode",
@@ -1196,12 +1208,14 @@ complex_oncoplot<-function(snp_indels,
 #' @param ... list. other params used for oncoprint.
 #'
 #' @return data.frame. mutations.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
 
 
 
 
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 complex_oncoplot_o<-function(snp_indels,
                            for_row="Hugo_Symbol",
                            for_column="Tumor_Sample_Barcode",
@@ -1450,8 +1464,10 @@ complex_oncoplot_o<-function(snp_indels,
 #' @param used_panels character. panel ids used for current cohort
 #'
 #' @return data.frame.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 annotate_genomic_mutations_with_panel_info<-function(genomic_mutations,mutation_chromosome_col="Chromosome",mutation_start_col="Start_position",mutation_end_col="End_position",mutation_gene_col="gene",
                                                      panel_info,panel_id_col="document_type",panel_chromosome_col="chromosome",panel_start_col="start_position",panel_end_col="end_position",panel_gene_col="gene",
                                                      used_panels=c("HP MD Solid Tumor Genomic Assay V1 Report","HP MD Solid Tumor Genomic Assay-DNA 2018 Report","HP MD Liquid Biopsy Panel V1 Report")){
@@ -1502,9 +1518,11 @@ annotate_genomic_mutations_with_panel_info<-function(genomic_mutations,mutation_
 #' @param timepoint_info_collect_date_format character. time format for timepoint info collect time.
 #'
 #' @return data.frame. timepoint annotated mdl mutations
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 annotate_mdl_mutations_with_timepoints<-function(mdl_mutations,mdl_mutation_patient_id_col="Patient_ID",mdl_mutation_collect_time_col,mdl_mutation_collect_date_format="%Y-%m-%d",timepoint_info,timepoint_info_patient_id_col="Patient_ID",timepoint_info_timepoint_col,timepoint_info_collect_time_col,timepoint_info_collect_date_format="%m/%d/%Y"){
   stopifnot("Patient ID not found in mutations"=(mdl_mutation_patient_id_col %in% colnames(mdl_mutations)))
   stopifnot("sample info contains no collect date"=(!any(is.na(timepoint_info[[timepoint_info_collect_time_col]]))))
@@ -1562,9 +1580,11 @@ annotate_mdl_mutations_with_timepoints<-function(mdl_mutations,mdl_mutation_pati
 #' @param cosmic_aa_col character. cosmic column for amino acid
 #'
 #' @return data.frame. mdl mutation with known mutation database.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 annotate_mdl_mutations_with_mutationdb<-function(mdl_mutations,mdl_mutations_gene_col="gene_name",mdl_mutations_aa_col="protein_description",with_oncokb=T,oncokb_db,oncokb_gene_col="Hugo Symbol",with_cosmic=T,cosmic_db,cosmic_gene_col="GENE_NAME",cosmic_aa_col="Mutation AA"){
   if(with_oncokb){
     mdl_mutations[["oncokb"]]<-ifelse(mdl_mutations[[mdl_mutations_gene_col]] %in% oncokb_db[[oncokb_gene_col]],"Yes","No")
@@ -1585,8 +1605,10 @@ annotate_mdl_mutations_with_mutationdb<-function(mdl_mutations,mdl_mutations_gen
 #' @param codons numeric. a numeric vector describ the protein codons
 #'
 #' @return numeric. minimal distance among codons.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 get_min_multihit_distance<-function(codons){
   if(length(codons)==1){
     return(NA)
@@ -1657,8 +1679,10 @@ get_min_multihit_distance<-function(codons){
 #' @param combined logic. if TRUE, consistent mutations between mdl mutations and wes/wgs mutations will be combined into one mutation.
 #'
 #' @return data.frame. annotated and merged mutations(WES/WGS,MDL)
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 harmonize_mutations<-function(wes_sample_info,wes_sample_id_col,wes_patient_id_col,wes_timepoint_col,wes_sample_collect_col,
                               wes_mutations=NULL,wes_mutation_sample_id_col,wes_gene_col='gene',wes_chromosome_col="Chromosome",wes_start_col="Start_Position",wes_end_col="End_Position",wes_keep_columns=c("Variant_Classification","Variant_Type","Reference_Allele","Tumor_Seq_Allele1","Tumor_Seq_Allele2","Protein_Change","i_TumorVAF_WU","cdna"),
                               wes_seq_intervals,
@@ -1801,9 +1825,11 @@ harmonize_mutations<-function(wes_sample_info,wes_sample_id_col,wes_patient_id_c
 #' @param ... list. extra parameter passed to ComplexHeatmap::Heatmap
 #'
 #' @return Heatmap. oncogenic pathway table plot
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
 
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 oncogenicpathway_tableplot<-function(pathways,mutations,sample_info,gene_column="",sample_id_column="Sample_ID",pathway_order,sample_order=NULL,top_anno,top_anno_sample_order,show_mutations=F,...){
   stopifnot("gene_column is not found in columns of mutations"=gene_column %in% colnames(mutations))
   mutation_sample_order<-colnames(mutations)[-1]
@@ -1877,8 +1903,10 @@ oncogenicpathway_tableplot<-function(pathways,mutations,sample_info,gene_column=
 #' @param ...  list. parameter passed to Heatmap.
 #'
 #' @return list. contains hallmark_heatmap and underlying matrix.
+#' @details Source provenance: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02).
 #' @export
 #'
+# SOURCE: woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/mutations.R (2026-03-02)
 cancerhallmark_heatmap<-function(assay,assay_format="l",gene_id_column="Hugo_Symbol",sample_id_col="Sample_ID",value_col,cancerhallmarks=CosmicCancerGeneCensusHallmarks,top_anno,top_anno_sample_order,hallmark_colors=NULL,impact_colors=NULL,show_assay_color=F,assay_colors=NULL,...){
   if(assay_format=="l"){
     assay<-tidyr::pivot_wider(assay,id_cols = gene_id_column,names_from = sample_id_col,values_from = value_col,values_fn = function(items){ifelse(length(items)>1,"Multihits",items)})

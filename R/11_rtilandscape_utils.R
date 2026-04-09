@@ -46,6 +46,19 @@
 
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Auto-detect column types (numeric > date > logical > factor > character)
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Auto-detect and convert df column types
+#'
+#' Auto-detect and convert df column types
+#' @param df Input data frame or matrix.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' auto_convert_types(df = ...)
+#' }
+#' @export
 auto_convert_types <- function(df) {
   df[] <- lapply(df, function(col) {
     # Try numeric
@@ -79,6 +92,17 @@ auto_convert_types <- function(df) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Normalize whitespace: replace non-breaking spaces, collapse multiple spaces,
 # trim, then convert spaces to underscores.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Normalize whitespace/underscore in strings
+#'
+#' Normalize whitespace/underscore in strings
+#' @param x Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' normalize_spaces(c("EGFR  amp", "Tumor_Response"))
+#' @export
 normalize_spaces <- function(x) {
   x <- gsub("\u00A0", " ", x)         # Replace non-breaking spaces
   x <- gsub("_", " ", x)              # Replace underscores with spaces
@@ -91,6 +115,17 @@ normalize_spaces <- function(x) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Capitalize words separated by underscores. Preserves all-caps acronyms (e.g. EGFR),
 # hyphenated terms, and parentheses.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Smart capitalize with underscore delimiters
+#'
+#' Smart capitalize with underscore delimiters
+#' @param input_vector Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' capitalize_words_with_underscores(c("egfr_amp", "mek-inhibitor"))
+#' @export
 capitalize_words_with_underscores <- function(input_vector) {
   input_vector <- normalize_spaces(input_vector)
 
@@ -126,6 +161,21 @@ capitalize_words_with_underscores <- function(input_vector) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Collapse specified columns within a data.table by key columns, joining unique
 # non-NA values with `sep`. Accepts column names or a regex pattern.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Collapse repeated columns by key (data.table)
+#'
+#' Collapse repeated columns by key (data.table)
+#' @param data Input data frame or matrix.
+#' @param collapse_cols Function argument documented from the legacy interface.
+#' @param sep Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' collapse_columns_dt(data = ..., collapse_cols = ...)
+#' }
+#' @export
 collapse_columns_dt <- function(data, collapse_cols, sep = ";") {
   dt <- data.table::as.data.table(data)
   all_names <- names(dt)
@@ -168,6 +218,23 @@ collapse_columns_dt <- function(data, collapse_cols, sep = ";") {
 # within each group. Supports euclidean/jaccard/cor/bicor distance and all
 # standard hclust linkage methods. Set merge_dendrogram=TRUE to merge group
 # dendrograms into a single tree.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Hierarchical clustering within group strata
+#'
+#' Hierarchical clustering within group strata
+#' @param data Input data frame or matrix.
+#' @param group_info Function argument documented from the legacy interface.
+#' @param merge_dendrogram Function argument documented from the legacy interface.
+#' @param simMethods Function argument documented from the legacy interface.
+#' @param clusterMethods Function argument documented from the legacy interface.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' cluster_only_within_group(...)
+#' }
+#' @export
 cluster_only_within_group = function(
     data, group_info, merge_dendrogram = FALSE,
     simMethods = c("euclidean", "maximum", "manhattan", "canberra", "minkowski",
@@ -265,6 +332,22 @@ cluster_only_within_group = function(
 # Fit a normal distribution to x and return the threshold at a given quantile.
 # direction="left" returns the lower tail threshold; "right" returns upper tail.
 # Optionally pass flag_values to get a logical flag vector relative to threshold.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Fit normal distribution and return threshold
+#'
+#' Fit normal distribution and return threshold
+#' @param x Function argument documented from the legacy interface.
+#' @param quantile_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param direction Function argument documented from the legacy interface.
+#' @param flag_values Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' fit_normal_threshold(x = ..., quantile_cutoff = ...)
+#' }
+#' @export
 fit_normal_threshold <- function(x, quantile_cutoff = 0.05, direction = "left", flag_values = NULL) {
   x <- x[!is.na(x)]
 
@@ -299,6 +382,24 @@ fit_normal_threshold <- function(x, quantile_cutoff = 0.05, direction = "left", 
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Fisher exact + chi-squared enrichment of variant x category combinations.
 # Returns per-combination contingency results with BH-adjusted Fisher p.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Fisher/chi-sq enrichment of variant x category
+#'
+#' Fisher/chi-sq enrichment of variant x category
+#' @param variant_df Function argument documented from the legacy interface.
+#' @param sample_info_df Function argument documented from the legacy interface.
+#' @param category_col Column name used by the existing implementation.
+#' @param variant_col Column name used by the existing implementation.
+#' @param sample_id_col Column name used by the existing implementation.
+#' @param patient_id_col Column name used by the existing implementation.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' run_category_enrichment(variant_df = ..., sample_info_df = ...)
+#' }
+#' @export
 run_category_enrichment <- function(
   variant_df,
   sample_info_df,
@@ -367,6 +468,19 @@ run_category_enrichment <- function(
 
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Recompute prediction ranks within Patient_ID x model groups (ties = "min").
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Recompute prediction ranks per patient/model
+#'
+#' Recompute prediction ranks per patient/model
+#' @param df Input data frame or matrix.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' recompute_ranks(df = ...)
+#' }
+#' @export
 recompute_ranks <- function(df) {
   df %>%
     dplyr::group_by(Patient_ID, model) %>%
@@ -380,6 +494,20 @@ recompute_ranks <- function(df) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Normalize a fusion pair to a canonical form: sort gene symbols alphabetically
 # and join with "--". Used to deduplicate A--B vs B--A.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Normalize fusion gene pair (sorted, "--" sep)
+#'
+#' Normalize fusion gene pair (sorted, "--" sep)
+#' @param gene1 Function argument documented from the legacy interface.
+#' @param gene2 Function argument documented from the legacy interface.
+#' @return A transformed data object returned by the function.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' normalize_fus(gene1 = ..., gene2 = ...)
+#' }
+#' @export
 normalize_fus <- function(gene1, gene2) {
   sort(c(gene1, gene2)) %>% paste(collapse = "--")
 }
@@ -387,6 +515,20 @@ normalize_fus <- function(gene1, gene2) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Get strand orientation for a vector of gene symbols using AnnotationDbi.
 # Returns a named character vector (symbol -> strand "+"/"-").
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Get strand info for gene symbols via AnnotationDbi
+#'
+#' Get strand info for gene symbols via AnnotationDbi
+#' @param genes Function argument documented from the legacy interface.
+#' @param gene_info Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' getStrandInfo(genes = ..., gene_info = ...)
+#' }
+#' @export
 getStrandInfo <- function(genes, gene_info) {
   map_ids <- AnnotationDbi::select(
     org.Hs.eg.db,
@@ -407,6 +549,32 @@ getStrandInfo <- function(genes, gene_info) {
 # domain retention, split-read support, multi-sample evidence, cancer DB hits,
 # TCGA hotspot genes, oncogene annotation, and multiple-mapping penalty.
 # Returns the input data frame with added scoring columns and a composite `score`.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Score fusion calls by frame/domain/read support
+#'
+#' Score fusion calls by frame/domain/read support
+#' @param fusion_df Function argument documented from the legacy interface.
+#' @param w_frame_in Function argument documented from the legacy interface.
+#' @param w_frame_utr3 Function argument documented from the legacy interface.
+#' @param w_domain Function argument documented from the legacy interface.
+#' @param nread_support1 Function argument documented from the legacy interface.
+#' @param nread_support2 Function argument documented from the legacy interface.
+#' @param w_split1 Function argument documented from the legacy interface.
+#' @param w_split2 Function argument documented from the legacy interface.
+#' @param w_nsample Function argument documented from the legacy interface.
+#' @param w_db Function argument documented from the legacy interface.
+#' @param w_tcga_hot Function argument documented from the legacy interface.
+#' @param w_oncogene Function argument documented from the legacy interface.
+#' @param penalty_multimap Function argument documented from the legacy interface.
+#' @param penalize_outframe Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' score_fusions(fusion_df = ..., w_frame_in = ...)
+#' }
+#' @export
 score_fusions <- function(fusion_df,
                           w_frame_in = 3,
                           w_frame_utr3 = 1,
@@ -470,6 +638,20 @@ score_fusions <- function(fusion_df,
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Score-based column ordering for oncoprints. Scores columns by the presence
 # of TRUE values weighted by row position (higher rows = higher weight).
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Score-based column ordering for oncoprints
+#'
+#' Score-based column ordering for oncoprints
+#' @param mat Function argument documented from the legacy interface.
+#' @param row_order Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' oncoprint_column_order(mat = ..., row_order = ...)
+#' }
+#' @export
 oncoprint_column_order = function(mat, row_order) {
   scoreCol = function(x) {
     score = 0
@@ -488,6 +670,23 @@ oncoprint_column_order = function(mat, row_order) {
 # Group-aware column ordering: orders columns within each group defined by
 # order_by_col, respecting factor levels. Within each group, calls
 # oncoprint_column_order(). Returns a vector of column names in display order.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Group-aware column ordering (wraps above)
+#'
+#' Group-aware column ordering (wraps above)
+#' @param count_matrix Function argument documented from the legacy interface.
+#' @param row_order Function argument documented from the legacy interface.
+#' @param patient_meta Function argument documented from the legacy interface.
+#' @param order_by_col Column name used by the existing implementation.
+#' @param id_col Column name used by the existing implementation.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' make_column_order(count_matrix = ..., row_order = ...)
+#' }
+#' @export
 make_column_order <- function(count_matrix, row_order, patient_meta,
                               order_by_col = "Diagnosis_II", id_col = "Patient_ID") {
   ord <- c()
@@ -510,6 +709,20 @@ make_column_order <- function(count_matrix, row_order, patient_meta,
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Row ordering for a drug/alteration matrix: order by drug class first, then
 # by descending total sample count, then by descending number of mutated samples.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Row ordering by drug class + mutation burden
+#'
+#' Row ordering by drug class + mutation burden
+#' @param count_matrix Function argument documented from the legacy interface.
+#' @param drug_classs Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' make_row_order(count_matrix = ..., drug_classs = ...)
+#' }
+#' @export
 make_row_order = function(count_matrix, drug_classs) {
   n_mut = rowSums(count_matrix > 0)
   order(drug_classs, -rowSums(count_matrix), -n_mut)
@@ -521,6 +734,20 @@ make_row_order = function(count_matrix, drug_classs) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # Map a vector of drug names to canonical synonyms using a synonym map (data.table).
 # synmap must have columns: alias_clean (lowercase alias) and canonical_name.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Map drug names to canonical synonyms
+#'
+#' Map drug names to canonical synonyms
+#' @param drug_vec Function argument documented from the legacy interface.
+#' @param synmap Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' map_drugs(drug_vec = ..., synmap = ...)
+#' }
+#' @export
 map_drugs <- function(drug_vec, synmap) {
   query <- data.table::data.table(drug_query = drug_vec)
   query[, drug_query_clean := tolower(drug_query)]
@@ -534,6 +761,19 @@ map_drugs <- function(drug_vec, synmap) {
 # SOURCE: RTI_funcs.R (2026-04-07)
 # From a vector of pathway strings, return the single most specific pathway:
 # removes "Other"/"Unclassified" if alternatives exist, then picks the longest.
+# SOURCE: RTI_funcs.R (2026-04-07)
+#' Pick most specific pathway from a vector
+#'
+#' Pick most specific pathway from a vector
+#' @param paths Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: RTI_funcs.R (2026-04-07).
+#'
+#' @examples
+#' \dontrun{
+#' pick_specific_pathway(paths = ...)
+#' }
+#' @export
 pick_specific_pathway <- function(paths) {
   cleaned <- paths[!grepl("Other|Unclassified", paths)]
 

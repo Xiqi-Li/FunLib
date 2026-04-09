@@ -27,6 +27,19 @@
 # --- SECTION 1: COORDINATE UTILITIES ---
 
 # SOURCE: myscripts.R
+#' Adjust copy-number segment means for purity and ploidy.
+#'
+#' Adjust copy-number segment means for purity and ploidy.
+#' @param segmean Function argument documented from the legacy interface.
+#' @param purity Function argument documented from the legacy interface.
+#' @param ploidy Function argument documented from the legacy interface.
+#' @return A numeric vector of transformed segment means.
+#' @details Source provenance: myscripts.R.
+#'
+#' @examples
+#' segmean <- c(-0.3, 0, 0.2)
+#' isar_transform(segmean, purity = 0.7, ploidy = 2)
+#' @export
 isar_transform<-function(segmean,purity,ploidy){
   #ref: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3966983/#R75
   # the formula R'(x) = q(x)/τ = R(x)/α − 2(1 − α)/(ατ) is wrong.
@@ -39,6 +52,27 @@ isar_transform<-function(segmean,purity,ploidy){
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Convert a genomic interval data frame to a `GRanges` object.
+#'
+#' Convert a genomic interval data frame to a `GRanges` object.
+#' @param df Input data frame or matrix.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @param seqnames_col Column name used by the existing implementation.
+#' @param start_col Column name used by the existing implementation.
+#' @param end_col Column name used by the existing implementation.
+#' @param strand_col Column name used by the existing implementation.
+#' @param meta_cols Function argument documented from the legacy interface.
+#' @return A `GenomicRanges::GRanges` object.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' \dontrun{
+#' df2granges(df = ..., genome = ...)
+#' }
+#' @export
 df2granges<-function(df,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC"),simplified=TRUE,xy=FALSE,seqnames_col="chromosome",start_col="start",end_col="end",strand_col=NULL,meta_cols=NULL){
   genome=match.arg(genome)
   if(genome=='hg19'){
@@ -73,6 +107,28 @@ df2granges<-function(df,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC"),
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Split a genomic interval data frame into a sample-wise `GRangesList`.
+#'
+#' Split a genomic interval data frame into a sample-wise `GRangesList`.
+#' @param df Input data frame or matrix.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @param sample_col Column name used by the existing implementation.
+#' @param seqnames_col Column name used by the existing implementation.
+#' @param start_col Column name used by the existing implementation.
+#' @param end_col Column name used by the existing implementation.
+#' @param strand_col Column name used by the existing implementation.
+#' @param meta_cols Function argument documented from the legacy interface.
+#' @return A named `GenomicRanges::GRangesList` object.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' \dontrun{
+#' df2grangelist(df = ..., genome = ...)
+#' }
+#' @export
 df2grangelist<-function(df,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC"),simplified=TRUE,xy=FALSE,sample_col="sample",seqnames_col="chromosome",start_col="start",end_col="end",strand_col=NULL,meta_cols=NULL){
   genome=match.arg(genome)
   seqlevelsStyle=match.arg(seqlevelsStyle)
@@ -90,6 +146,19 @@ df2grangelist<-function(df,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Tile a genome into fixed windows and transfer overlapping metadata.
+#'
+#' Tile a genome into fixed windows and transfer overlapping metadata.
+#' @param gr Genomic ranges input used by the function.
+#' @param window Numeric tuning parameter used by the existing implementation.
+#' @return A binned `GenomicRanges::GRanges` object with metadata columns copied from overlaps.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' \dontrun{
+#' bingranges(gr = ..., window = ...)
+#' }
+#' @export
 bingranges<-function(gr,window=500000){
   seqinfo_<-GenomeInfoDb::seqinfo(gr)
   bingenome<-lapply(1:length(seqinfo_),function(i){chromosome=seqinfo_@seqnames[i];
@@ -109,6 +178,22 @@ bingranges<-function(gr,window=500000){
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Convert genomic coordinates to linear genome positions.
+#'
+#' Convert genomic coordinates to linear genome positions.
+#' @param gr Genomic ranges input used by the function.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @return A data frame with chromosome, start, end, and metadata columns on a linear genome scale.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' \dontrun{
+#' gr2linear(gr = ..., genome = ...)
+#' }
+#' @export
 gr2linear<-function(gr,genome=c("hg19",'hg38'),seqlevelsStyle=c("NCBI","UCSC"),simplified=T,xy=F){
   genome_=match.arg(genome)
   seqlevelsStyle_=match.arg(seqlevelsStyle)
@@ -143,6 +228,18 @@ gr2linear<-function(gr,genome=c("hg19",'hg38'),seqlevelsStyle=c("NCBI","UCSC"),s
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Convert one data-frame column to a named vector.
+#'
+#' Convert one data-frame column to a named vector.
+#' @param df Input data frame or matrix.
+#' @param column Function argument documented from the legacy interface.
+#' @return A named vector built from the requested column.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' df <- data.frame(score = c(1, 2), row.names = c("A", "B"))
+#' column2namedVector(df, "score")
+#' @export
 column2namedVector<-function(df,column){
   vec<-df[[column]]
   names(vec)<-rownames(df)
@@ -150,6 +247,22 @@ column2namedVector<-function(df,column){
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Align rows or columns to the order defined by a reference object.
+#'
+#' Align rows or columns to the order defined by a reference object.
+#' @param aligned_df Function argument documented from the legacy interface.
+#' @param aligned_name Function argument documented from the legacy interface.
+#' @param keep_names Function argument documented from the legacy interface.
+#' @param refered_df Function argument documented from the legacy interface.
+#' @param refered_name Function argument documented from the legacy interface.
+#' @return A reordered data frame.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' \dontrun{
+#' align_df(aligned_df = ..., aligned_name = ...)
+#' }
+#' @export
 align_df<-function(aligned_df,aligned_name,keep_names=NULL,refered_df,refered_name){
   if(refered_name=="rownames"){
     refered_=rownames(refered_df)
@@ -197,6 +310,18 @@ align_df<-function(aligned_df,aligned_name,keep_names=NULL,refered_df,refered_na
 }
 
 # SOURCE: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R)
+#' Compute a pairwise chi-squared distance matrix.
+#'
+#' Compute a pairwise chi-squared distance matrix.
+#' @param df Input data frame or matrix.
+#' @return A `stats::dist` object.
+#' @details Source provenance: functions.R (woodman_lab.XLi23/HaifengPackages.Mar2026/utiltools/R/functions.R).
+#'
+#' @examples
+#' \dontrun{
+#' chisq_dist(df = ...)
+#' }
+#' @export
 chisq_dist<-function(df){
   statistics<-apply(df,2,function(col_1){apply(df,2,function(col_2){p<-stats::chisq.test(col_1,col_2,correct = T);return(p$statistic)})})
   return(stats::as.dist(statistics))
@@ -205,6 +330,31 @@ chisq_dist<-function(df){
 # --- SECTION 2: COPY NUMBER VISUALIZATION ---
 
 # SOURCE: myscripts.R
+#' Plot segmented copy-number profiles across the genome.
+#'
+#' Plot segmented copy-number profiles across the genome.
+#' @param segments Function argument documented from the legacy interface.
+#' @param sample_order Function argument documented from the legacy interface.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @param chromosome_colors Color specification used when plotting.
+#' @param anno_df Function argument documented from the legacy interface.
+#' @param anno_sample_col Column name used by the existing implementation.
+#' @param anno_seqnames_col Column name used by the existing implementation.
+#' @param anno_start_col Column name used by the existing implementation.
+#' @param anno_end_col Column name used by the existing implementation.
+#' @param anno_meta_cols Function argument documented from the legacy interface.
+#' @param anno_gene_text_size Function argument documented from the legacy interface.
+#' @return A plot object, grob, or side-effect plot generated by the function.
+#' @details Source provenance: myscripts.R.
+#'
+#' @examples
+#' \dontrun{
+#' ggcopynumber(segments = ..., sample_order = ...)
+#' }
+#' @export
 ggcopynumber<-function(segments=NULL,sample_order=NULL,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC"),simplified=T,xy=F,chromosome_colors=c("grey","black"),
                        anno_df=NULL,anno_sample_col="Tumor_Sample_Barcode",anno_seqnames_col = "Chromosome",anno_start_col = "Start_position",anno_end_col = "End_Position",anno_meta_cols = c("Hugo_Symbol","Variant_Classification","Variant_Type"),
                        anno_gene_text_size=2){
@@ -292,6 +442,27 @@ ggcopynumber<-function(segments=NULL,sample_order=NULL,genome=c("hg19","hg38"),s
 }
 
 # SOURCE: myscripts.R
+#' Plot genome-wide amplification and deletion scores.
+#'
+#' Plot genome-wide amplification and deletion scores.
+#' @param scores_gr Genomic ranges input used by the function.
+#' @param type_colors Color specification used when plotting.
+#' @param threshold Numeric tuning parameter used by the existing implementation.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @param chromosome_colors Color specification used when plotting.
+#' @param scores_anno_gr Genomic ranges input used by the function.
+#' @param text_size Function argument documented from the legacy interface.
+#' @return A plot object, grob, or side-effect plot generated by the function.
+#' @details Source provenance: myscripts.R.
+#'
+#' @examples
+#' \dontrun{
+#' ggscores(scores_gr = ..., type_colors = ...)
+#' }
+#' @export
 ggscores<-function(scores_gr,type_colors=c("Amp"="red","Del"="blue"),threshold=1,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC"),simplified=T,xy=F,chromosome_colors=c("grey","black"),scores_anno_gr,text_size=3){
   # prepare linear genome data
   stopifnot(all(seqlengths(scores_gr)==seqlengths(scores_anno_gr)))
@@ -387,6 +558,27 @@ ggscores<-function(scores_gr,type_colors=c("Amp"="red","Del"="blue"),threshold=1
 }
 
 # SOURCE: myscripts.R
+#' Visualize chromosome-arm level copy-number events.
+#'
+#' Visualize chromosome-arm level copy-number events.
+#' @param arms Input data frame or matrix.
+#' @param arm_significance Function argument documented from the legacy interface.
+#' @param sample_order Function argument documented from the legacy interface.
+#' @param threshold Numeric tuning parameter used by the existing implementation.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @param type_colors Color specification used when plotting.
+#' @param arm_colors Color specification used when plotting.
+#' @return A plot object, grob, or side-effect plot generated by the function.
+#' @details Source provenance: myscripts.R.
+#'
+#' @examples
+#' \dontrun{
+#' ggarms(arms = ..., arm_significance = ...)
+#' }
+#' @export
 ggarms<-function(arms,arm_significance,sample_order=NULL,threshold=1,genome=c("hg19","hg38"),seqlevelsStyle=c("NCBI","UCSC"),simplified=T,xy=F,type_colors=c("Amp"="red","Del"="blue"),arm_colors=c("grey","black")){
   library(TxDb.Hsapiens.UCSC.hg19.knownGene)
   library(TxDb.Hsapiens.UCSC.hg38.knownGene)
@@ -479,6 +671,50 @@ ggarms<-function(arms,arm_significance,sample_order=NULL,threshold=1,genome=c("h
 # SOURCE: myscripts.R
 # NOTE: gggenome in DNAfuncs.R is identical in logic; the myscripts.R version is used here as it
 # includes the integrated scores panel (CN_p + Del_p + Amp_p).
+# SOURCE: myscripts.R
+#' Render multi-sample genome-wide copy-number plots.
+#'
+#' Render multi-sample genome-wide copy-number plots.
+#' @param segments Function argument documented from the legacy interface.
+#' @param sample_col Column name used by the existing implementation.
+#' @param seqnames_col Column name used by the existing implementation.
+#' @param start_col Column name used by the existing implementation.
+#' @param end_col Column name used by the existing implementation.
+#' @param meta_cols Function argument documented from the legacy interface.
+#' @param sample_order Function argument documented from the legacy interface.
+#' @param segments_anno_df Function argument documented from the legacy interface.
+#' @param anno_sample_col Column name used by the existing implementation.
+#' @param anno_seqnames_col Column name used by the existing implementation.
+#' @param anno_start_col Column name used by the existing implementation.
+#' @param anno_end_col Column name used by the existing implementation.
+#' @param anno_meta_cols Function argument documented from the legacy interface.
+#' @param anno_gene_text_size Function argument documented from the legacy interface.
+#' @param scores_df Function argument documented from the legacy interface.
+#' @param score_seqnames_col Column name used by the existing implementation.
+#' @param score_start_col Column name used by the existing implementation.
+#' @param score_end_col Column name used by the existing implementation.
+#' @param score_meta_cols Function argument documented from the legacy interface.
+#' @param type_colors Color specification used when plotting.
+#' @param threshold Numeric tuning parameter used by the existing implementation.
+#' @param scores_anno_df Function argument documented from the legacy interface.
+#' @param score_anno_seqnames_col Column name used by the existing implementation.
+#' @param score_anno_start_col Column name used by the existing implementation.
+#' @param score_anno_end_col Column name used by the existing implementation.
+#' @param score_anno_meta_cols Function argument documented from the legacy interface.
+#' @param anno_score_text_size Function argument documented from the legacy interface.
+#' @param genome Option controlling how the function runs.
+#' @param seqlevelsStyle Option controlling how the function runs.
+#' @param simplified Logical flag controlling optional behavior.
+#' @param xy Logical flag controlling optional behavior.
+#' @param chromosome_colors Color specification used when plotting.
+#' @return A plot object, grob, or side-effect plot generated by the function.
+#' @details Source provenance: myscripts.R.
+#'
+#' @examples
+#' \dontrun{
+#' gggenome(segments = ..., sample_col = ...)
+#' }
+#' @export
 gggenome<-function(segments,sample_col="sample",seqnames_col = "chromosome",start_col = "start",end_col = "end",meta_cols = c("sample","probes","segmean"),sample_order=NULL,
                    segments_anno_df=NULL,anno_sample_col="Tumor_Sample_Barcode",anno_seqnames_col = "Chromosome",anno_start_col = "Start_position",anno_end_col = "End_Position",anno_meta_cols = c("Hugo_Symbol","Variant_Classification","Variant_Type"),anno_gene_text_size=2,
                    scores_df=NULL,score_seqnames_col = "Chromosome",score_start_col = "Start",score_end_col = "End",score_meta_cols = c("Type","neg_log10_q_value"),type_colors=c("Amp"="red","Del"="blue"),threshold=1,

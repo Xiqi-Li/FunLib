@@ -16,6 +16,31 @@
 
 
 # SOURCE: Pembro/funcsInPembro.R (2025-07-02)
+#' Gsea.
+#'
+#' Gsea.
+#' @param statistics Function argument documented from the legacy interface.
+#' @param output_dir Output plotting or file parameter used by the existing implementation.
+#' @param logFC_col Column name used by the existing implementation.
+#' @param pval_col Column name used by the existing implementation.
+#' @param pval_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param pathways Function argument documented from the legacy interface.
+#' @param enrichment_padj_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param pathway_gene_table_file Output plotting or file parameter used by the existing implementation.
+#' @param fgseatableplot_file Output plotting or file parameter used by the existing implementation.
+#' @param enrich_pathways Function argument documented from the legacy interface.
+#' @param enrichment_map Function argument documented from the legacy interface.
+#' @param FC_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param kappa_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return The result object produced by the analysis.
+#' @details Source provenance: Pembro/funcsInPembro.R (2025-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' gsea(...)
+#' }
+#' @export
 gsea<-function(statistics,output_dir=".",logFC_col="logFC",pval_col="P.Value",pval_cutoff=0.05,pathways,enrichment_padj_cutoff=0.05,pathway_gene_table_file,fgseatableplot_file="fgseatableplot.tiff",enrich_pathways="up2down2",enrichment_map=T,FC_cutoff=1.5,kappa_cutoff=0.3,...){
   if(!dir.exists(output_dir)){dir.create(output_dir)}
   if(class(statistics)=="data.frame"){
@@ -98,6 +123,19 @@ gsea<-function(statistics,output_dir=".",logFC_col="logFC",pval_col="P.Value",pv
 
 
 # SOURCE: Pembro/funcsInPembro.R (2025-07-02)
+#' Pathway gene table.
+#'
+#' Pathway gene table.
+#' @param pathways Function argument documented from the legacy interface.
+#' @param stats Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: Pembro/funcsInPembro.R (2025-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' pathway_gene_table(pathways = ..., stats = ...)
+#' }
+#' @export
 pathway_gene_table<-function(pathways,stats){
   stats<-data.frame(Gene_ID=names(stats),logFC=stats)
   genes_ordered_by_freq<-names(genes_freq<-sort(table(Reduce(c,pathways))[intersect(stats[["Gene_ID"]],unique(Reduce(c,pathways)))],decreasing = T))
@@ -171,6 +209,27 @@ fgseatableplot<-function (pathways, stats, fgseaRes, gseaParam = 1, colwidths = 
 
 
 # SOURCE: Pembro/funcsInPembro.R (2025-07-02)
+#' Sankey heatmap.
+#'
+#' Sankey heatmap.
+#' @param sig_expressions Function argument documented from the legacy interface.
+#' @param scale Option controlling how the function runs.
+#' @param pathways Function argument documented from the legacy interface.
+#' @param keep_other Function argument documented from the legacy interface.
+#' @param other_color Color specification used when plotting.
+#' @param pathway_colors Color specification used when plotting.
+#' @param sankey_width Function argument documented from the legacy interface.
+#' @param line_size Function argument documented from the legacy interface.
+#' @param text_size Function argument documented from the legacy interface.
+#' @param ... Additional arguments passed through to downstream functions.
+#' @return A heatmap-like plotting object or rendered plot, depending on the code path.
+#' @details Source provenance: Pembro/funcsInPembro.R (2025-07-02).
+#'
+#' @examples
+#' \dontrun{
+#' sankey_heatmap(...)
+#' }
+#' @export
 sankey_heatmap<-function(sig_expressions,scale=TRUE,pathways,keep_other=TRUE,other_color="gray",pathway_colors,sankey_width=unit(10, "cm"),line_size=1,text_size=6,...){
   if(scale){
     sig_expressions<-t(scale(t(sig_expressions)))
@@ -225,6 +284,21 @@ sankey_heatmap<-function(sig_expressions,scale=TRUE,pathways,keep_other=TRUE,oth
 
 
 # SOURCE: myscripts.R (2023-06-29)
+#' Read pathways.
+#'
+#' Read pathways.
+#' @param pathway_file Output plotting or file parameter used by the existing implementation.
+#' @param splitter Function argument documented from the legacy interface.
+#' @param pathwayname_ind Function argument documented from the legacy interface.
+#' @param gene_start_ind Function argument documented from the legacy interface.
+#' @return An object returned by the function based on the requested query or input.
+#' @details Source provenance: myscripts.R (2023-06-29).
+#'
+#' @examples
+#' \dontrun{
+#' read_pathways(pathway_file = ..., splitter = ...)
+#' }
+#' @export
 read_pathways<-function(pathway_file,splitter="\t",pathwayname_ind=1,gene_start_ind=3){
   pathways=list()
   con=file(pathway_file,"r")
@@ -240,6 +314,36 @@ read_pathways<-function(pathway_file,splitter="\t",pathwayname_ind=1,gene_start_
 
 
 # SOURCE: myscripts.R (2023-06-29)
+#' Go Enrich.
+#'
+#' Go Enrich.
+#' @param genelist Function argument documented from the legacy interface.
+#' @param ont Option controlling how the function runs.
+#' @param enrichGO_params Function argument documented from the legacy interface.
+#' @param rendergodagplot Function argument documented from the legacy interface.
+#' @param dagplot_params Function argument documented from the legacy interface.
+#' @param renderdotplot Function argument documented from the legacy interface.
+#' @param dotplot_params Function argument documented from the legacy interface.
+#' @param rendersemanticemapplot Function argument documented from the legacy interface.
+#' @param emapplot_params Function argument documented from the legacy interface.
+#' @param rendercnetplot Function argument documented from the legacy interface.
+#' @param cnetplot_params Function argument documented from the legacy interface.
+#' @param qvalue_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param similarity_obj Function argument documented from the legacy interface.
+#' @param term_similarity_params Function argument documented from the legacy interface.
+#' @param simplifygo Function argument documented from the legacy interface.
+#' @param simplifygo_params Function argument documented from the legacy interface.
+#' @param enrichmap Function argument documented from the legacy interface.
+#' @param termsimilarity_cutoff Numeric tuning parameter used by the existing implementation.
+#' @param enrichmap_params Function argument documented from the legacy interface.
+#' @return The value returned by the current implementation.
+#' @details Source provenance: myscripts.R (2023-06-29).
+#'
+#' @examples
+#' \dontrun{
+#' goEnrich(genelist = ..., ont = ...)
+#' }
+#' @export
 goEnrich<-function(genelist,ont="BP",enrichGO_params=NULL,rendergodagplot=T,dagplot_params=NULL,renderdotplot=T,dotplot_params=NULL,rendersemanticemapplot=T,emapplot_params=NULL,rendercnetplot=T,cnetplot_params=NULL,qvalue_cutoff=0.05,similarity_obj=c("gene","term"),term_similarity_params=NULL,simplifygo=T,simplifygo_params=NULL,enrichmap=T,termsimilarity_cutoff=0.2,enrichmap_params=NULL){
   similarity_obj<-match.arg(similarity_obj)
   go<-do.call(clusterProfiler::enrichGO, c(list(gene=genelist,OrgDb = org.Hs.eg.db, keyType = "SYMBOL",ont= ont),enrichGO_params))
